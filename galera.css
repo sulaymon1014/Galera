@@ -1,0 +1,1835 @@
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    scroll-behavior:auto;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    color:white;
+    background:black;
+}
+
+@font-face{
+    font-family: "MyFont";
+    src: url("Resources/Fonts/HenriDidot.otf") format("opentype");
+}
+
+@font-face{
+
+    font-family:"Artist Font";
+
+    src:url("Resources/Fonts/PastelTrunk-Regular.otf") format("opentype");
+
+    font-weight:400;
+    font-style:normal;
+
+    font-display:swap;
+
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* =========================
+   BACKGROUND VIDEO
+========================= */
+
+.background-video{
+    position:absolute;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    z-index:-2;
+}
+
+/* =========================
+   DARK OVERLAY
+========================= */
+
+.overlay{
+    position:absolute;
+    inset:0;
+
+    background:rgba(0,0,0,.25);
+
+    z-index:-1;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+
+    position:absolute;
+    top:0;
+    left:0;
+
+    width:100%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:15px 70px;
+
+    position:fixed;
+
+    background:transparent;
+
+    transition:background-color .35s ease;
+
+    z-index:1000;
+
+}
+
+.hero-title{
+    font-family: "MyFont";
+    font-size: 100px;
+    font-weight: 100;
+    -webkit-text-stroke: 0.5px white;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+
+    height:42px;
+
+    cursor:pointer;
+
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:35px;
+}
+
+nav ul{
+
+    display:flex;
+    list-style:none;
+
+    gap:35px;
+
+}
+
+nav a{
+
+    position:relative;
+    display:inline-block;
+
+    color:white;
+    text-decoration:none;
+
+    font-size:16px;
+
+    transition:transform .3s ease;
+
+}
+
+nav a:hover{
+
+    transform:scale(1.1);
+
+}
+
+nav a::after{
+
+    content:"";
+
+    position:absolute;
+    left:50%;
+    bottom:-4px;
+
+    width:0;
+    height:1px;
+
+    background:white;
+
+    transform:translateX(-50%);
+
+    transition:width .3s ease;
+
+}
+
+nav a:hover::after{
+    width:100%;
+}
+
+/* =========================
+   SUPPORT BUTTON
+========================= */
+
+.support-btn{
+
+    position:relative;
+    overflow:hidden;
+
+    height:40px;
+    padding:0 30px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#ff6600;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:background-color .3s, transform .3s;
+
+}
+
+.support-btn:active{
+
+    transform:translateY(-1px);
+
+}
+
+.support-btn:hover{
+
+    background:#ff6600;
+
+}
+
+.support-btn .btn-inner{
+
+    position:relative;
+    height:100%;
+
+    transition:transform .35s ease;
+
+}
+
+.support-btn:hover .btn-inner{
+    transform:translateY(-100%);
+}
+
+.support-btn .text,
+.support-btn .icon{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    height:42px;
+    width:100%;
+
+}
+
+.support-btn .icon{
+
+    position:absolute;
+    top:100%;
+    left:0;
+
+}
+
+.support-btn .btn-inner{
+
+    display:block;
+
+    position:relative;
+    height:100%;
+
+    transition:transform .35s ease;
+
+}
+
+/* =========================
+   HERO CONTENT
+========================= */
+
+.hero-content{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    text-align:center;
+
+    width:80%;
+    max-width:900px;
+
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.hero-content .hero-logo{
+
+    max-width:100%;
+    width:450px;
+
+    margin:0 auto 20px;
+
+    display:block;
+
+}
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.hero-content p{
+
+    font-size:20px;
+
+    line-height:1.8;
+
+    color:#e8e8e8;
+
+    margin-bottom:40px;
+
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-btn{
+    position:relative;
+    overflow:visible;
+    isolation:isolate;
+
+    background:#ffffff;
+    border:none;
+    border-radius:10px;
+
+    height:50px;
+    width:150px;
+
+    cursor:pointer;
+}
+
+.login-btn .text{
+    position:relative;
+    z-index:2;
+}
+
+.login-btn:active{
+
+    transform:translateY(-1px);
+
+}
+
+/* =========================
+   CURSOR-FOLLOWING AURA GLOW
+========================= */
+
+.login-btn .hotspot{
+
+    position:absolute;
+    inset:-2px;              /* size of the invisible "bigger button" mask */
+
+    border-radius:inherit;
+    overflow:hidden;           /* clips the round glow into this pill shape */
+
+    opacity:0;
+    z-index:-1;
+    pointer-events:none;
+
+    transition:opacity .9s ease;
+}
+
+.login-btn:hover .hotspot{
+    opacity:1;
+}
+
+.login-btn .hotspot::before{
+
+    content:"";
+    position:absolute;
+
+    top:50%;
+    left:var(--glow-x, 90%);
+    transform:translate(-50%,-50%);
+
+    width:40px;
+    height:180px;
+
+    border-radius:50%;         /* the actual light source: perfectly round */
+
+    background:radial-gradient(
+        circle,
+        #ffffff 90%,
+        rgba(255,157,61,0) 90%  
+    );
+
+    filter:blur(14px);
+}
+
+/* =========================
+   SIGNUP
+========================= */
+
+.signup-btn{
+    position:relative;
+    overflow:hidden;
+
+    height:50px;
+    width:150px;
+
+    border:2px solid white;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+.signup-btn:active{
+
+    transform:translateY(-1px);
+
+}
+
+.signup-btn:hover{
+
+    transition-delay:.35s; /* let the flare finish sweeping before the fill kicks in */
+
+}
+
+/*    FLARE SWEEP   */
+
+.signup-btn::before{
+
+    content:"";
+
+    position:absolute;
+    top:0;
+    left:-60%;
+
+    width:35%;
+    height:100%;
+
+    background:linear-gradient(
+        295deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,.2) 50%,
+        rgba(255,255,255,0) 100%
+    );
+
+    pointer-events:none;
+
+}
+
+.signup-btn:hover::before{
+    left:130%;
+    transition:left .5s ease;
+}
+
+.explore-btn{
+
+    position:absolute;
+
+    left:50%;
+    bottom:20px;
+
+    transform:translateX(-50%);
+
+    background:none;
+    border:none;
+
+    color:white;
+
+    font-size:16px;
+    letter-spacing:.5px;
+
+    cursor:pointer;
+
+    padding:6px 0;
+
+}
+
+.explore-btn::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:0;
+
+    width:0;
+    height:1px;
+
+    background:white;
+
+    transform:translateX(-50%);
+
+    transition:width .35s ease;
+
+}
+
+.explore-btn:hover::after{
+
+    width:100%;
+
+}
+
+.explore-btn:active{
+    transform:translateX(-50%) scale(1.03);
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section{
+
+    padding: 30px;
+
+}
+
+section h2{
+
+    font-size:32px;
+
+    margin-bottom:20px;
+
+}
+
+h2{
+
+    font-family:"Galera Heading", "Cinzel", Georgia, serif;
+
+}
+
+/* =========================
+   Featured Artworks
+========================= */
+
+#featured{
+    position:relative;
+    overflow:hidden;
+
+    margin:20px 15px;
+
+    height:50vh;
+
+    border-radius:20px;
+}
+
+#featured:hover{
+
+    cursor:pointer;
+
+}
+
+#featured h2{
+
+    position:relative;
+    z-index:1;
+
+    margin:0;
+
+}
+
+#popular-artists h2,
+#featured h2{
+
+    text-align:center;
+
+    left:0;
+    top:0;
+
+    width:100%;
+
+}
+
+#featured .featured-video{
+
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    object-position:50% 50%;
+    scale:1.01;
+
+    transform:none;
+
+    z-index:-2;
+
+}
+
+/* Shine layer */
+#featured::after {
+  content: "";
+  position: absolute;
+  top: -50%;   /* shift up */
+  left: -10%;
+  width: 200%; /* extra wide so diagonal covers */
+  height: 200%; /* extra tall */
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0) 45%,
+    rgba(255,255,255,0.3) 48%,
+    rgba(255,255,255,0) 51%
+  );
+
+  /* equilateral triangle mask (single-triangle tile repeated) */
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='26' viewBox='0 0 30 26'><g stroke='white' stroke-width='2' fill='none'><polygon points='15,0 30,26 0,26'/></g></svg>");
+  -webkit-mask-repeat: repeat;
+  -webkit-mask-size: 20px 16px;
+
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='26' viewBox='0 0 30 26'><g stroke='white' stroke-width='2' fill='none'><polygon points='15,0 30,26 0,26'/></g></svg>");
+  mask-repeat: repeat;
+  mask-size: 15px 10px;
+
+  animation: shine 0.8s linear;
+  animation-delay: 0s;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(100%); }
+}
+
+#featured::after{
+    transform: translateX(-100%);
+    animation: none;
+}
+
+#featured:hover::after{
+    animation: shine 2s linear;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    text-align:center;
+
+    padding:35px;
+
+    background:#111;
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+    header{
+
+        padding:25px;
+
+        flex-direction:column;
+
+        gap:20px;
+
+    }
+
+    nav ul{
+
+        gap:20px;
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+    }
+
+    .hero-content h1{
+
+        font-size:55px;
+
+    }
+
+    .hero-content p{
+
+        font-size:17px;
+
+    }
+
+    .buttons{
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+}
+
+.background-video{
+
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:opacity 1s ease;
+
+}
+
+.video-a{
+
+    opacity:1;
+    z-index:-2;
+
+}
+
+.video-b{
+
+    opacity:0;
+    z-index:-1;
+
+}
+
+/* =========================
+   Popular Artists
+========================= */
+
+#popular-artists{
+
+    min-height: 530px;
+
+}
+
+.artists-row{
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+
+    gap:18px;
+
+    perspective:1400px;
+
+}
+
+/* ============================
+   Artist Cards
+============================ */
+
+.artist-card{
+    position: relative;
+
+    width:230px;
+    height:360px;
+
+    overflow:hidden;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:
+        transform 1s ease,
+        filter .45s ease;
+
+}
+
+.artist-card img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+
+}
+
+
+/* ============================
+   Card Positions
+============================ */
+
+.artist-far-left{
+    transform: translateY(0) rotateY(35deg);
+}
+
+.artist-left{
+    transform: translateY(20px) rotateY(27deg);
+}
+
+.artist-center{
+    transform: translateY(40px) rotateY(0deg);
+}
+
+.artist-right{
+    transform: translateY(20px) rotateY(-27deg);
+}
+
+.artist-far-right{
+    transform: translateY(0) rotateY(-35deg);
+}
+
+
+/* ============================
+   Hover
+============================ */
+
+.artist-card:hover{
+
+    transform:
+        translateY(-10px)
+        rotateY(0deg)
+        scale(1.01);
+
+    z-index:10;
+
+}
+
+.artist-card::after{
+
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,0) 35%,
+            rgba(0,0,0,.5) 65%,
+            rgba(0,0,0,0.7) 100%
+        );
+
+    pointer-events: none;
+
+    transition: opacity 0.4s ease;
+
+}
+
+.artist-center::after{
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,0) 45%,
+            rgba(0,0,0,.04) 72%,
+            rgba(0,0,0,.12) 100%
+        );
+
+}
+
+.artist-name{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    z-index:10;
+
+    opacity:0;
+
+    color:#fff;
+
+    font-size:4rem;
+    font-weight:300;
+    letter-spacing:1px;
+
+    text-align:center;
+
+    transition:opacity .35s ease;
+
+    pointer-events:none;
+
+}
+
+.artist-name{
+
+    font-family:"Artist Font", Georgia, serif;
+
+}
+
+.artist-card:hover .artist-name{
+
+    opacity:1;
+
+}
+
+/* ============================
+   About Section
+============================ */
+
+.art-river {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: transparent; /* Seamless blend into your section background */
+}
+
+#cardWaveCanvas {
+  display: block;
+  width: 100%;
+  height: 550px; /* Provides plenty of vertical space for the wave curves */
+  margin: 0 auto;
+}
+
+/* ============================
+   Log In / Sign Up Window
+============================ */
+
+/* ==========================================================================
+   AUTHENTICATION MODAL COMPONENT (CONSOLIDATED STYLESHEET)
+========================================================================== */
+
+/* 1. Modal Overlay Screen Veil */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensures structural placement stays above all canvas environments */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Toggled state via JavaScript utility class */
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 2. Main Modal Structural Envelope Card */
+.modal-box {
+  background-color: #161616;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-box {
+  transform: scale(1);
+}
+
+/* 3. Upper Image Frame Space */
+.modal-header-banner{
+    height:200px;
+    position:relative;
+    overflow:hidden;
+}
+
+.banner-display-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 15%;
+}
+
+/* 4. Layered Close Button Interface Element */
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #ffffff; /* Translucent shield for legibility over white art paths */
+  backdrop-filter: blur(4px);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #161616;
+  font-size: 18px;
+  transition: background-color 0.2s, transform 0.1s;
+  z-index: 10;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.05);
+}
+
+.modal-close-btn:active {
+  transform: scale(0.95);
+}
+
+/* 5. Core Content Container Block */
+.modal-body-content {
+  padding: 36px 32px;
+  text-align: center;
+}
+
+/* 6. Brand Logo Header Elements */
+.brand-logo-container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:20px; /* was 32px */
+}
+
+/* New layout structure rule keeping the custom image logo proportional */
+.brand-logo-image {
+  width: 28px;
+  height: 28px;
+  object-fit: contain; /* Prevents visual asset squishing or distortion */
+  display: block;
+}
+
+.brand-name-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 7. Action Button Grid Elements */
+.auth-action-btn {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  transition: background-color 0.2s, transform 0.1s;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.auth-action-btn:active {
+  transform: scale(0.99);
+}
+
+.auth-action-btn i{
+    font-size:18px;
+}
+
+.auth-icon{
+    width:20px;
+    height:20px;
+    flex-shrink:0;
+}
+
+/* Google Action Identity Styling */
+.btn-google {
+  background-color: #1d1f20;
+  color: #ffffff;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.btn-google:hover {
+  border-color:rgba(255,102,0,.35);
+}
+
+/* Apple Action Identity Styling */
+.btn-apple {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.btn-apple:hover {
+  background-color: #dfe5f1;
+}
+
+/* Button Inline Vector Scaling */
+.btn-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* 8. Footer Terms Agreement Block text styling */
+.legal-agreement-text {
+  margin-top: 24px;
+  font-size: 12px;
+  color: #ccd1da;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.legal-agreement-text a {
+  color: #828e9c;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.legal-agreement-text a:hover {
+  color: #636f8b;
+}
+
+/* ==========================================
+   NEW ADDITION: Divider Lines & Email Layout
+========================================== */
+
+/* 1. The Horizontal Grid Line Splitter styling */
+.modal-auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0; /* Creates space between the Apple button and Email option */
+  color: #9ca3af; /* Light gray text tone */
+}
+
+.modal-auth-divider::before,
+.modal-auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e5e7eb; /* Renders the long lines on left/right side */
+}
+
+.modal-auth-divider:not(:empty)::before {
+  margin-right: .75em;
+}
+
+.modal-auth-divider:not(:empty)::after {
+  margin-left: .75em;
+}
+
+.divider-text {
+  font-size: 14px;
+  font-family: sans-serif;
+  color: #a1b8d8;
+}
+
+/* 2. Custom Light Blue Variant for the Email Button Container */
+.btn-email {
+  background-color: #e0f2fe; /* Custom soft blue background matching the image */
+  color: #0f172a; /* Dark slate text for readability */
+  height: auto; /* Overrides fixed heights to fit double row text padding */
+  padding: 12px 20px;
+}
+
+.btn-email:hover {
+  background-color: #bae6fd; /* Darkens slightly on hover */
+}
+
+.email-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.email-title{
+    font-weight:600;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.email-address{
+    font-size:13px;
+    color:#8b8b8b;
+}
+
+.email-subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  color: #64748b; /* Lighter slate color text variant for the sub-row metadata */
+}
+
+/* =====================================================
+   EMAIL AUTH PAGE
+===================================================== */
+
+.email-auth-page{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	width:100%;
+}
+
+.email-title{
+	margin:28px 0 8px;
+	font-size:2rem;
+	font-weight:600;
+	text-align:center;
+	color:#fff;
+}
+
+.email-subtitle{
+	margin-bottom:32px;
+	color:rgba(255,255,255,.65);
+	font-size:.95rem;
+	text-align:center;
+	line-height:1.6;
+}
+
+.email-field{
+	width:100%;
+	margin-bottom:20px;
+}
+
+.email-field label{
+	display:block;
+	margin-bottom:8px;
+	font-size:.88rem;
+	font-weight:500;
+	color:#fff;
+}
+
+.password-header{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	margin-bottom:8px;
+}
+
+.forgot-link{
+	color:#d5d5d5;
+	font-size:.82rem;
+	text-decoration:none;
+	transition:.25s;
+}
+
+.forgot-link:hover{
+	color:#fff;
+}
+
+.email-input{
+	width:100%;
+	height:56px;
+	padding:0 18px;
+	background:rgba(255,255,255,.05);
+	border:1px solid rgba(255,255,255,.08);
+	border-radius:16px;
+	color:#fff;
+	font-size:.95rem;
+	outline:none;
+	transition:.25s;
+}
+
+.email-input::placeholder{
+	color:rgba(255,255,255,.4);
+}
+
+.email-input:focus{
+	border-color:#ffffff55;
+	background:rgba(255,255,255,.07);
+}
+
+.password-input{
+	position:relative;
+}
+
+.password-input .email-input{
+	padding-right:56px;
+}
+
+.toggle-password{
+	position:absolute;
+	top:50%;
+	right:18px;
+	transform:translateY(-50%);
+	background:none;
+	border:none;
+	color:rgba(255,255,255,.55);
+	font-size:1rem;
+	cursor:pointer;
+	transition:.25s;
+}
+
+.toggle-password:hover{
+	color:#fff;
+}
+
+.btn-email-submit{
+	width:100%;
+	margin-top:10px;
+}
+
+.email-footer{
+	width:100%;
+	margin-top:26px;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	font-size:.88rem;
+	color:rgba(255,255,255,.7);
+}
+
+.email-footer p{
+	margin:0;
+}
+
+.email-footer a{
+	color:#fff;
+	text-decoration:none;
+	font-weight:600;
+}
+
+.back-auth-btn{
+	display:flex;
+	align-items:center;
+	gap:8px;
+	background:none;
+	border:none;
+	color:#fff;
+	font-size:.9rem;
+	cursor:pointer;
+	padding:0;
+	transition:.25s;
+}
+
+.back-auth-btn:hover{
+	opacity:.7;
+}
+
+/* ==========================================
+   Support Window
+========================================== */
+
+.support-overlay{
+	position:fixed;
+	inset:0;
+
+	display:flex;
+	justify-content:flex-end;
+	align-items:flex-end;
+
+	padding:28px;
+
+	background:rgba(0,0,0,.45);
+	backdrop-filter:blur(8px);
+
+	opacity:0;
+	pointer-events:none;
+
+	transition:.3s ease;
+
+	z-index:9999;
+}
+
+.support-overlay.active{
+	opacity:1;
+	pointer-events:auto;
+}
+
+.support-popup{
+	width:430px;
+	height:760px;
+
+	display:flex;
+	flex-direction:column;
+
+	background:#171717;
+
+	border:1px solid rgba(255,255,255,.06);
+	border-radius:26px;
+
+	overflow:hidden;
+
+	box-shadow:
+		0 30px 90px rgba(0,0,0,.65),
+		0 0 45px rgba(255,102,0,.08);
+
+	transform:translateY(40px) scale(.96);
+
+	transition:
+		transform .4s cubic-bezier(.22,1,.36,1);
+}
+
+.support-overlay.active .support-popup{
+	transform:translateY(0) scale(1);
+}
+
+.support-banner{
+	position:relative;
+
+	height:210px;
+	flex-shrink:0;
+
+	overflow:hidden;
+}
+
+.support-banner-image{
+	width:100%;
+	height:100%;
+
+	object-fit:cover;
+	object-position:center 42%;
+
+	display:block;
+}
+
+.support-banner-overlay{
+	position:absolute;
+	inset:0;
+
+	background:
+		linear-gradient(
+			to bottom,
+			rgba(0,0,0,.05),
+			rgba(23,23,23,.82) 76%,
+			#171717
+		);
+}
+
+.support-close-btn{
+	position:absolute;
+
+	top:16px;
+	right:16px;
+
+	width:38px;
+	height:38px;
+
+	border:none;
+	border-radius:50%;
+
+	background:rgba(255,255,255,.08);
+	backdrop-filter:blur(10px);
+
+	color:#fff;
+	font-size:24px;
+
+	cursor:pointer;
+
+	transition:.25s;
+}
+
+.support-close-btn:hover{
+	background:#ff6600;
+	transform:rotate(90deg);
+}
+
+.support-body{
+	flex:1;
+
+	display:flex;
+	flex-direction:column;
+
+	padding:26px;
+}
+
+.support-title{
+	margin-bottom:22px;
+	text-align:center;
+}
+
+.support-title h2{
+	color:#fff;
+
+	font-size:27px;
+	font-weight:600;
+
+	margin-bottom:8px;
+}
+
+.support-title p{
+	color:#9d9d9d;
+
+	font-size:14px;
+	line-height:1.6;
+}
+
+.support-tabs{
+	position:relative;
+
+	display:flex;
+
+	padding:6px;
+	margin-bottom:24px;
+
+	background:#202020;
+
+	border:1px solid rgba(255,255,255,.05);
+	border-radius:14px;
+}
+
+.tab-indicator{
+	position:absolute;
+
+	top:6px;
+	left:6px;
+
+	width:calc(50% - 9px);
+	height:calc(100% - 12px);
+
+	background:linear-gradient(180deg,#ff7a1a,#ff6600);
+
+	border-radius:10px;
+
+	box-shadow:
+		0 10px 26px rgba(255,102,0,.28);
+
+	transition:
+		left .42s cubic-bezier(.22,1,.36,1);
+
+	z-index:1;
+}
+
+.tab-btn{
+	position:relative;
+	z-index:2;
+
+	flex:1;
+
+	padding:12px 0;
+
+	background:none;
+	border:none;
+
+	border-radius:10px;
+
+	color:#9b9b9b;
+
+	font-size:14px;
+	font-weight:600;
+
+	cursor:pointer;
+
+	transition:color .25s;
+}
+
+.tab-btn.active{
+	color:#fff;
+}
+
+.tab-btn:hover:not(.active){
+	color:#fff;
+}
+
+.support-pages{
+	position:relative;
+
+	flex:1;
+
+	overflow:hidden;
+}
+
+.support-page{
+	position:absolute;
+	inset:0;
+
+	display:flex;
+	flex-direction:column;
+
+	overflow-y:auto;
+
+	padding-right:6px;
+
+	opacity:0;
+	visibility:hidden;
+
+	transform:translateX(30px);
+
+	pointer-events:none;
+
+	transition:
+		opacity .35s ease,
+		transform .35s ease;
+}
+
+.support-page.active{
+	opacity:1;
+	visibility:visible;
+
+	transform:translateX(0);
+
+	pointer-events:auto;
+}
+
+.support-page{
+	-ms-overflow-style:none;
+	scrollbar-width:none;
+}
+
+.support-page::-webkit-scrollbar{
+	display:none;
+}
+
+.issue-card{
+	display:flex;
+	align-items:center;
+
+	gap:16px;
+
+	padding:18px;
+
+	background:#1f1f1f;
+
+	border:1px solid rgba(255,255,255,.05);
+	border-radius:18px;
+
+	cursor:pointer;
+
+	transition:.28s;
+}
+
+.issue-card:not(:last-child){
+	margin-bottom:12px;
+}
+
+.issue-card:hover{
+	background:#252525;
+
+	border-color:rgba(255,102,0,.35);
+
+	transform:translateX(6px);
+
+	box-shadow:
+		0 14px 28px rgba(0,0,0,.28);
+}
+
+.issue-icon{
+	width:52px;
+	height:52px;
+
+	display:flex;
+	align-items:center;
+	justify-content:center;
+
+	background:rgba(255,102,0,.12);
+
+	border-radius:14px;
+
+	flex-shrink:0;
+}
+
+.issue-icon svg{
+	width:24px;
+	height:24px;
+
+	fill:#ff7a1a;
+}
+
+.issue-info{
+	flex:1;
+}
+
+.issue-info h4{
+	color:#fff;
+
+	font-size:16px;
+	font-weight:600;
+
+	margin-bottom:4px;
+}
+
+.issue-info p{
+	color:#8e8e8e;
+
+	font-size:13px;
+	line-height:1.5;
+}
+
+.issue-arrow{
+	color:#ff7a1a;
+
+	font-size:20px;
+	font-weight:600;
+
+	transition:.25s;
+}
+
+.issue-card:hover .issue-arrow{
+	transform:translateX(6px);
+}
+
+#contact textarea{
+	width:100%;
+	height:145px;
+
+	padding:16px;
+
+	background:#202020;
+
+	border:1px solid rgba(255,255,255,.06);
+	border-radius:16px;
+
+	color:#fff;
+
+	font-size:14px;
+	font-family:inherit;
+	line-height:1.6;
+
+	outline:none;
+	resize:none;
+
+	transition:.25s;
+}
+
+#contact textarea:focus{
+	border-color:rgba(255,102,0,.45);
+
+	box-shadow:
+		0 0 0 4px rgba(255,102,0,.08);
+}
+
+.upload-box{
+	display:flex;
+	align-items:center;
+
+	gap:18px;
+
+	margin-top:18px;
+
+	padding:18px;
+
+	background:#1f1f1f;
+
+	border:1px dashed rgba(255,255,255,.12);
+	border-radius:18px;
+
+	cursor:pointer;
+
+	transition:.25s;
+}
+
+.upload-box:hover{
+	background:#252525;
+	border-color:#ff7a1a;
+}
+
+.upload-icon{
+	width:52px;
+	height:52px;
+
+	display:flex;
+	align-items:center;
+	justify-content:center;
+
+	background:rgba(255,102,0,.12);
+
+	border-radius:14px;
+
+	flex-shrink:0;
+}
+
+.upload-icon svg{
+	width:24px;
+	height:24px;
+
+	fill:#ff7a1a;
+}
+
+.upload-info h4{
+	color:#fff;
+
+	font-size:15px;
+	font-weight:600;
+
+	margin-bottom:5px;
+}
+
+.upload-info p{
+	color:#8f8f8f;
+
+	font-size:13px;
+}
+
+.send-btn{
+	margin-top:auto;
+
+	width:100%;
+	height:54px;
+
+	background:linear-gradient(180deg,#ff7a1a,#ff6600);
+
+	border:none;
+	border-radius:16px;
+
+	color:#fff;
+
+	font-size:15px;
+	font-weight:600;
+
+	cursor:pointer;
+
+	box-shadow:
+		0 14px 30px rgba(255,102,0,.22);
+
+	transition:.25s;
+}
+
+.send-btn:hover{
+	transform:translateY(-2px);
+
+	box-shadow:
+		0 20px 40px rgba(255,102,0,.32);
+}
+
+.send-btn:active{
+	transform:translateY(0);
+}
+
+body.support-open{
+	overflow:hidden;
+}
