@@ -1,27 +1,35 @@
+/* ==========================================
+  HERO BACKGROUND VIDEO
+========================================== */
+
+/* ===== Video Sources ===== */
 const sources = [
-    "Resources/Vids/Lylian Head BG.mp4",
-    "Resources/Vids/Yan Haiqin Head BG.mp4"
+  "Resources/Vids/Lylian Head BG.mp4",
+  "Resources/Vids/Yan Haiqin Head BG.mp4"
 ];
 
+/* ===== Video Elements ===== */
 const videoA = document.querySelector(".video-a");
 const videoB = document.querySelector(".video-b");
 
+/* ===== Active Video State ===== */
 let active = videoA;
 let hidden = videoB;
 
 let index = 0;
 
+/* ===== Initial Video Loading ===== */
 // Load first video
 active.src = sources[0];
 active.load();
 
 active.oncanplay = () => {
-    active.play();
+  active.play();
 };
 
 active.oncanplay = () => {
-    active.playbackRate = 0.8;
-    active.play();
+  active.playbackRate = 0.8;
+  active.play();
 };
 
 // Preload second video immediately
@@ -31,225 +39,184 @@ hidden.load();
 // When active video is almost over
 active.addEventListener("timeupdate", handleTransition);
 
+/* ===== Video Transition ===== */
 function handleTransition(){
+  if(active.duration - active.currentTime <= 1){
+    active.removeEventListener("timeupdate", handleTransition);
+    hidden.currentTime = 0;
+    hidden.play();
+    hidden.style.opacity = "1";
+    active.style.opacity = "0";
 
-    if(active.duration - active.currentTime <= 1){
+    setTimeout(() => {
+      active.pause();
+      index = (index + 1) % sources.length;
+      let temp = active;
+      active = hidden;
+      hidden = temp;
+      hidden.src = sources[(index + 1) % sources.length];
+      hidden.load();
+      active.addEventListener("timeupdate", handleTransition);
+    },1000);
 
-        active.removeEventListener("timeupdate", handleTransition);
-
-        hidden.currentTime = 0;
-
-        hidden.play();
-
-        hidden.style.opacity = "1";
-        active.style.opacity = "0";
-
-        setTimeout(() => {
-
-            active.pause();
-
-            index = (index + 1) % sources.length;
-
-            let temp = active;
-            active = hidden;
-            hidden = temp;
-
-            hidden.src = sources[(index + 1) % sources.length];
-            hidden.load();
-
-            active.addEventListener("timeupdate", handleTransition);
-
-        },1000);
-
-    }
+  }
 
 }
+
+/* ==========================================
+  HEADER
+========================================== */
 
 const header = document.getElementById("header");
 
-let hovering = false;
+/* ===== Scroll Opacity ===== */
+let lastScroll = 0;
 
-header.addEventListener("mouseenter", () => {
-    hovering = true;
-    header.style.backgroundColor = "rgba(0,0,0,0.7)";
-});
+function updateHeader(){
 
-header.addEventListener("mouseleave", () => {
-    hovering = false;
-    updateHeader(); // Restore the correct scroll-based opacity
-});
+  const currentScroll = window.scrollY;
 
-function updateHeader() {
+  // Keep visible at the top
+  if(currentScroll < 80){
+    header.classList.remove("header-hidden");
+    header.style.backgroundColor = "rgba(0,0,0,.9)";
+    lastScroll = currentScroll;
+    return;
+  }
 
-    if (hovering) return;
+  const scrollingDown = currentScroll > lastScroll;
+  const scrollingUp = currentScroll < lastScroll;
 
-    // Your existing opacity logic here...
-}
+  if(scrollingDown){
+    header.classList.add("header-hidden");
+  }
+  else if(scrollingUp){
+    header.classList.remove("header-hidden");
+  }
 
-function updateHeader() {
-
-    if (window.scrollY === 0) {
-
-        header.style.backgroundColor = "rgba(0,0,0,0)";
-        return;
-
-    }
-
-    let progress = Math.min(window.scrollY / 300, 1);
-
-    let opacity = 0.7 + progress * 0.4;
-
-    if (opacity > 1) opacity = 1;
-
-    header.style.backgroundColor = `rgba(0,0,0,${opacity})`;
-
+  lastScroll = currentScroll;
 }
 
 updateHeader();
 window.addEventListener("scroll", updateHeader);
 
+/* ===== Hamburger Menu ===== */
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+
+// Toggle Hamburger Animation
+hamburgerBtn.addEventListener("click", () => {
+  hamburgerBtn.classList.toggle("active");
+});
+
+/* ==========================================
+  HERO
+========================================== */
+
+/* ===== Login Button Glow ===== */
 const buttons = document.querySelectorAll(".login-btn");
 
 buttons.forEach(btn => {
+  btn.addEventListener("mousemove", e => {
+    const rect = btn.getBoundingClientRect();
+    let x = e.clientX - rect.left;
 
-    btn.addEventListener("mousemove", e => {
-
-        const rect = btn.getBoundingClientRect();
-
-        let x = e.clientX - rect.left;
-
-        // Prevent the glow from leaving the button too much
-        x = Math.max(0, Math.min(rect.width -0, x));
-
-        btn.style.setProperty("--glow-x", `${x}px`);
-
-    });
-
+    // Prevent the glow from leaving the button too much
+    x = Math.max(0, Math.min(rect.width -0, x));
+    btn.style.setProperty("--glow-x", `${x}px`);
+  });
 });
 
+/* ==========================================
+  FEATURED
+========================================== */
 
+/* ===== Featured Background Video ===== */
 const featuredVideo = document.querySelector(".featured-video");
 featuredVideo.src = "Resources/Vids/Nizhan Future Featured Artists BG.mp4";
 featuredVideo.load();
 
 
 /* ==========================================
-   Artist Card Artwork Preview
-   Changes artwork while hovering a card
+  POPULAR ARTISTS
 ========================================== */
 
+/* ===== Artist Artwork Library ===== */
 const artworks = {
+  penguln322: [
+    "Resources/Popular Artists/Penguln322/2.png",
+    "Resources/Popular Artists/Penguln322/3.png",
+    "Resources/Popular Artists/Penguln322/4.png",
+    "Resources/Popular Artists/Penguln322/5.png",
+    "Resources/Popular Artists/Penguln322/6.png",
+  ],
 
-    penguln322: [
-        "Resources/Popular Artists/Penguln322/2.png",
-        "Resources/Popular Artists/Penguln322/3.png",
-        "Resources/Popular Artists/Penguln322/4.png",
-        "Resources/Popular Artists/Penguln322/5.png",
-        "Resources/Popular Artists/Penguln322/6.png",
-    ],
+  nizhan: [
+    "Resources/Popular Artists/Nizhan/2.png",
+    "Resources/Popular Artists/Nizhan/3.png",
+    "Resources/Popular Artists/Nizhan/4.png",
+    "Resources/Popular Artists/Nizhan/5.png",
+    "Resources/Popular Artists/Nizhan/6.png",
+  ],
 
-    nizhan: [
-        "Resources/Popular Artists/Nizhan/2.png",
-        "Resources/Popular Artists/Nizhan/3.png",
-        "Resources/Popular Artists/Nizhan/4.png",
-        "Resources/Popular Artists/Nizhan/5.png",
-        "Resources/Popular Artists/Nizhan/6.png",
-    ],
+  wlop: [
+    "Resources/Popular Artists/WLOP/2.png",
+    "Resources/Popular Artists/WLOP/3.png",
+    "Resources/Popular Artists/WLOP/4.png",
+    "Resources/Popular Artists/WLOP/5.png",
+    "Resources/Popular Artists/WLOP/6.png",
+  ],
+  
+  aeolian: [
+    "Resources/Popular Artists/Aeolian/2.png",
+    "Resources/Popular Artists/Aeolian/3.png",
+    "Resources/Popular Artists/Aeolian/4.png",
+    "Resources/Popular Artists/Aeolian/5.png",
+    "Resources/Popular Artists/Aeolian/6.png",
+  ],
 
-    wlop: [
-        "Resources/Popular Artists/WLOP/2.png",
-        "Resources/Popular Artists/WLOP/3.png",
-        "Resources/Popular Artists/WLOP/4.png",
-        "Resources/Popular Artists/WLOP/5.png",
-        "Resources/Popular Artists/WLOP/6.png",
-    ],
-    
-    aeolian: [
-        "Resources/Popular Artists/Aeolian/2.png",
-        "Resources/Popular Artists/Aeolian/3.png",
-        "Resources/Popular Artists/Aeolian/4.png",
-        "Resources/Popular Artists/Aeolian/5.png",
-        "Resources/Popular Artists/Aeolian/6.png",
-    ],
-
-    ghostblade: [
-        "Resources/Popular Artists/Ghost Blade/2.png",
-        "Resources/Popular Artists/Ghost Blade/3.png",
-        "Resources/Popular Artists/Ghost Blade/4.png",
-        "Resources/Popular Artists/Ghost Blade/5.png",
-        "Resources/Popular Artists/Ghost Blade/6.png",
-    ],
+  ghostblade: [
+    "Resources/Popular Artists/Ghost Blade/2.png",
+    "Resources/Popular Artists/Ghost Blade/3.png",
+    "Resources/Popular Artists/Ghost Blade/4.png",
+    "Resources/Popular Artists/Ghost Blade/5.png",
+    "Resources/Popular Artists/Ghost Blade/6.png",
+  ],
 
 };
 
-
-/* ==========================================
-   Hover Image Slideshow
-========================================== */
-
+/* ===== Artwork Hover Slideshow ===== */
 document.querySelectorAll(".artist-card").forEach(card => {
+  const img = card.querySelector("img");
+  const artist = img.dataset.artist;
+  const images = artworks[artist];
+  console.log("Artist:", artist);
+  console.log("Images:", images);
+  const firstImage = img.src;
+  let interval;
+  let index = -1;
 
-    const img = card.querySelector("img");
-
-    const artist = img.dataset.artist;
-
-    const images = artworks[artist];
-
-    console.log("Artist:", artist);
-    console.log("Images:", images);
-
-    const firstImage = img.src;
-
-    let interval;
-    let index = -1;
-
-    card.addEventListener("mouseenter", () => {
-
-        
-        interval = setInterval(() => {
-
-            index++;
-
-            if(index < images.length){
-
-                img.src = images[index];
-
-            }else{
-
-                clearInterval(interval);
-
-            }
-
-        }, 250);
-
-    });
-
-    card.addEventListener("mouseleave", () => {
-
+  card.addEventListener("mouseenter", () => {
+    interval = setInterval(() => {
+      index++;
+      if(index < images.length){
+        img.src = images[index];
+      }else{
         clearInterval(interval);
+      }
+    }, 250);
+  });
 
-        img.src = firstImage;
-
-        index = 0;
-
-    });
+  card.addEventListener("mouseleave", () => {
+    clearInterval(interval);
+    img.src = firstImage;
+    index = 0;
+  });
 
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ====== ABOUT SECTION ======
+/* ==========================================
+   ABOUT
+========================================== */
 
 (function() {
   const canvas = document.getElementById('cardWaveCanvas');
@@ -388,12 +355,11 @@ document.querySelectorAll(".artist-card").forEach(card => {
 })();
 
 /* ==========================================
-   Log In / Sign Up Window
+  LOG IN/SIGN UP POP UP WINDOW
 ========================================== */
 
-// ==========================================
-// ====== AUTHENTICATION MODAL ENGINE ======
-// ==========================================
+/* ======= AUTHENTICATION MODAL ENGINE ====== */
+
 (function() {
   // 1. Target all structural interface triggers
   const loginBtn = document.getElementById('loginTrigger');
@@ -439,6 +405,7 @@ document.querySelectorAll(".artist-card").forEach(card => {
   });
 })();
 
+/* 
 const authOverlay = document.getElementById("authModalOverlay");
 
 const emailOverlay = document.getElementById("emailAuthOverlay");
@@ -467,16 +434,16 @@ document.getElementById("showLogin").onclick = e => {
     signupPage.classList.remove("active");
     loginPage.classList.add("active");
 };
-
+*/
 
 
 /* ==========================================
-   Support Window
+   SUPPORT POP UP WINDOW
 ========================================== */
 
 const supportOverlay = document.getElementById("supportOverlay");
 const supportPopup = document.querySelector(".support-popup");
-const supportTrigger = document.querySelector(".support-btn");
+const supportTrigger = document.getElementById("my-support-trigger");
 const supportClose = document.getElementById("close-popup");
 
 const tabButtons = document.querySelectorAll(".tab-btn");
@@ -505,43 +472,30 @@ supportOverlay.addEventListener("click", e => {
 tabButtons.forEach(button => {
 
 	button.addEventListener("click", () => {
-
 		tabButtons.forEach(btn => btn.classList.remove("active"));
 		pages.forEach(page => page.classList.remove("active"));
-
 		button.classList.add("active");
 
 		document
 			.getElementById(button.dataset.tab)
 			.classList.add("active");
-
 		moveIndicator(button);
-
 	});
-
 });
 
 function moveIndicator(button){
-
 	indicator.style.width = `${button.offsetWidth}px`;
 	indicator.style.left = `${button.offsetLeft}px`;
-
 }
 
 window.addEventListener("load", () => {
-
 	const active = document.querySelector(".tab-btn.active");
-
 	moveIndicator(active);
-
 });
 
 window.addEventListener("resize", () => {
-
 	const active = document.querySelector(".tab-btn.active");
-
 	moveIndicator(active);
-
 });
 
 

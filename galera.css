@@ -13,6 +13,10 @@ body{
     scroll-behavior:auto;
 }
 
+/* =========================
+   FONTS
+========================= */
+
 body{
     font-family:Arial, Helvetica, sans-serif;
     color:white;
@@ -25,16 +29,31 @@ body{
 }
 
 @font-face{
-
     font-family:"Artist Font";
-
     src:url("Resources/Fonts/PastelTrunk-Regular.otf") format("opentype");
-
     font-weight:400;
     font-style:normal;
-
     font-display:swap;
 
+}
+
+/* =========================
+   GLOBAL ELEMENTS
+========================= */
+
+/* Section */
+
+section{
+    padding: 30px;
+}
+
+section h2{
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+h2{
+    font-family:"Galera Heading", "Cinzel", Georgia, serif;
 }
 
 /* =========================
@@ -48,33 +67,37 @@ body{
     overflow:hidden;
 }
 
-/* =========================
-   BACKGROUND VIDEO
-========================= */
+/* ===== Background Video ===== */
 
 .background-video{
     position:absolute;
     top:0;
     left:0;
-
+    inset:0;
     width:100%;
     height:100%;
-
     object-fit:cover;
+    z-index:-2;
+    transition:opacity 1s ease;
+}
 
+.video-a{
+    opacity:1;
     z-index:-2;
 }
 
-/* =========================
-   DARK OVERLAY
-========================= */
+.video-b{
+    opacity:0;
+    z-index:-1;
+}
+
+
+/* ====== Dark Overlay ====== */
 
 .overlay{
     position:absolute;
     inset:0;
-
     background:rgba(0,0,0,.25);
-
     z-index:-1;
 }
 
@@ -83,274 +106,207 @@ body{
 ========================= */
 
 header{
-
     position:absolute;
     top:0;
     left:0;
-
     width:100%;
-
     display:flex;
-    justify-content:space-between;
     align-items:center;
-
-    padding:15px 70px;
-
+    padding:12px 70px;
     position:fixed;
-
+    justify-content:space-between;
     background:transparent;
-
-    transition:background-color .35s ease;
-
+    transition:
+        background-color .35s ease,
+        transform .35s ease,
+        opacity .35s ease;
     z-index:1000;
-
 }
 
-.hero-title{
-    font-family: "MyFont";
-    font-size: 100px;
-    font-weight: 100;
-    -webkit-text-stroke: 0.5px white;
+.header-left{
+    display:flex;
+    align-items:center;
 }
 
-/* =========================
-   LOGO
-========================= */
+header.header-hidden{
+    opacity:0;
+    transform:translateY(-18px);
+    pointer-events:none;
+}
+header.scrolled{
+    padding:10px 70px;
+}
 
-.logo{
+header.scrolled .logo{
+    height:32px;
+}
 
-    height:42px;
+/* ===== Hamburger Button ===== */
 
+.hamburger-btn{
+    display:none;
+    width:36px;
+    height:32px;
+
+    padding:0;
+    border:none;
+    background:none;
     cursor:pointer;
 
+    transition:transform .3s ease;
 }
 
-/* =========================
-   RIGHT SIDE
-========================= */
+
+.hamburger-btn span{
+    display:block;
+    width:22px;
+    height:2px;
+    margin:5px auto;
+
+    background:#fff;
+    border-radius:2px;
+
+    transition:
+        transform 0.3s cubic-bezier(.68,-0.55,.27,1.55),
+        opacity 0.2s ease;
+}
+
+
+/* ===== Hamburger Active State ===== */
+.hamburger-btn.active{
+    transform:rotate(90deg);
+}
+
+.hamburger-btn.active span:nth-child(1){
+    transform:translateY(7px) rotate(45deg);
+}
+
+.hamburger-btn.active span:nth-child(2){
+    opacity:0;
+}
+
+.hamburger-btn.active span:nth-child(3){
+    transform:translateY(-7px) rotate(-45deg);
+}
+
+/* ===== Brand Logo ===== */
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    user-select: none;
+}
+
+.brand img{
+    width:36px;
+    height:36px;
+}
+
+.brand span{
+    font-size:22px;
+    font-weight:400;
+    color:#fff;
+    letter-spacing:.5px;
+}
+
+/* ======= Right Side ======= */
 
 nav{
     display:flex;
     align-items:center;
     gap:35px;
+    margin-left:auto;
+    user-select: none;
 }
 
 nav ul{
-
     display:flex;
     list-style:none;
-
     gap:35px;
 
 }
 
 nav a{
-
     position:relative;
     display:inline-block;
-
     color:white;
     text-decoration:none;
-
     font-size:16px;
-
     transition:transform .3s ease;
 
 }
 
 nav a:hover{
-
     transform:scale(1.1);
-
 }
 
 nav a::after{
-
     content:"";
-
     position:absolute;
     left:50%;
     bottom:-4px;
-
     width:0;
     height:1px;
-
     background:white;
-
     transform:translateX(-50%);
-
     transition:width .3s ease;
-
 }
 
 nav a:hover::after{
     width:100%;
 }
 
-/* =========================
-   SUPPORT BUTTON
-========================= */
-
-.support-btn{
-
-    position:relative;
-    overflow:hidden;
-
-    height:40px;
-    padding:0 30px;
-
-    border:none;
-    border-radius:10px;
-
-    background:#ff6600;
-
-    color:white;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:background-color .3s, transform .3s;
-
-}
-
-.support-btn:active{
-
-    transform:translateY(-1px);
-
-}
-
-.support-btn:hover{
-
-    background:#ff6600;
-
-}
-
-.support-btn .btn-inner{
-
-    position:relative;
-    height:100%;
-
-    transition:transform .35s ease;
-
-}
-
-.support-btn:hover .btn-inner{
-    transform:translateY(-100%);
-}
-
-.support-btn .text,
-.support-btn .icon{
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    height:42px;
-    width:100%;
-
-}
-
-.support-btn .icon{
-
-    position:absolute;
-    top:100%;
-    left:0;
-
-}
-
-.support-btn .btn-inner{
-
-    display:block;
-
-    position:relative;
-    height:100%;
-
-    transition:transform .35s ease;
-
-}
-
-/* =========================
-   HERO CONTENT
-========================= */
+/* ===== HERO CONTENT ===== */
 
 .hero-content{
-
     position:absolute;
-
     top:50%;
     left:50%;
-
     transform:translate(-50%,-50%);
-
     text-align:center;
-
     width:80%;
     max-width:900px;
-
 }
 
-/* =========================
-   TITLE
-========================= */
+/* ====== Title =========== */
 
-.hero-content .hero-logo{
-
-    max-width:100%;
-    width:450px;
-
-    margin:0 auto 20px;
-
-    display:block;
-
+.hero-title{
+    font-family: "MyFont";
+    font-size: 100px;
+    font-weight: 100;
+    -webkit-text-stroke: 0.5px white;
+    user-select: none;
 }
 
-/* =========================
-   DESCRIPTION
-========================= */
+/* ======= Description =========== */
 
 .hero-content p{
-
     font-size:20px;
-
     line-height:1.8;
-
     color:#e8e8e8;
-
     margin-bottom:40px;
-
+    user-select: none;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* ======== Buttons ========= */
 
 .buttons{
-
     display:flex;
-
     justify-content:center;
-
     gap:20px;
-
 }
 
-/* =========================
-   LOGIN
-========================= */
+/* Log In */
 
 .login-btn{
     position:relative;
     overflow:visible;
     isolation:isolate;
-
     background:#ffffff;
     border:none;
     border-radius:10px;
-
     height:50px;
     width:150px;
-
     cursor:pointer;
 }
 
@@ -360,27 +316,19 @@ nav a:hover::after{
 }
 
 .login-btn:active{
-
     transform:translateY(-1px);
-
 }
 
-/* =========================
-   CURSOR-FOLLOWING AURA GLOW
-========================= */
+/* Log In Cursor Hover */
 
 .login-btn .hotspot{
-
     position:absolute;
     inset:-2px;              /* size of the invisible "bigger button" mask */
-
     border-radius:inherit;
     overflow:hidden;           /* clips the round glow into this pill shape */
-
     opacity:0;
     z-index:-1;
     pointer-events:none;
-
     transition:opacity .9s ease;
 }
 
@@ -389,87 +337,61 @@ nav a:hover::after{
 }
 
 .login-btn .hotspot::before{
-
     content:"";
     position:absolute;
-
     top:50%;
     left:var(--glow-x, 90%);
     transform:translate(-50%,-50%);
-
     width:40px;
     height:180px;
-
     border-radius:50%;         /* the actual light source: perfectly round */
-
     background:radial-gradient(
         circle,
         #ffffff 90%,
         rgba(255,157,61,0) 90%  
     );
-
     filter:blur(14px);
 }
 
-/* =========================
-   SIGNUP
-========================= */
+/* Sign Up */
 
 .signup-btn{
     position:relative;
     overflow:hidden;
-
     height:50px;
     width:150px;
-
     border:2px solid white;
-
     border-radius:10px;
-
     background:transparent;
-
     color:white;
-
     font-size:17px;
-
     cursor:pointer;
-
 }
 
 .signup-btn:active{
-
     transform:translateY(-1px);
-
 }
 
 .signup-btn:hover{
-
     transition-delay:.35s; /* let the flare finish sweeping before the fill kicks in */
-
 }
 
-/*    FLARE SWEEP   */
+/*    Sign Up Hover Flare Sweep   */
 
 .signup-btn::before{
-
     content:"";
-
     position:absolute;
     top:0;
     left:-60%;
-
     width:35%;
     height:100%;
-
     background:linear-gradient(
         295deg,
         rgba(255,255,255,0) 0%,
         rgba(255,255,255,.2) 50%,
         rgba(255,255,255,0) 100%
     );
-
     pointer-events:none;
-
 }
 
 .signup-btn:hover::before{
@@ -478,52 +400,33 @@ nav a:hover::after{
 }
 
 .explore-btn{
-
     position:absolute;
-
     left:50%;
     bottom:20px;
-
     transform:translateX(-50%);
-
     background:none;
     border:none;
-
     color:white;
-
     font-size:16px;
     letter-spacing:.5px;
-
     cursor:pointer;
-
     padding:6px 0;
-
 }
 
 .explore-btn::after{
-
     content:"";
-
     position:absolute;
-
     left:50%;
     bottom:0;
-
     width:0;
     height:1px;
-
     background:white;
-
     transform:translateX(-50%);
-
     transition:width .35s ease;
-
 }
 
 .explore-btn:hover::after{
-
     width:100%;
-
 }
 
 .explore-btn:active{
@@ -531,87 +434,45 @@ nav a:hover::after{
 }
 
 /* =========================
-   SECTIONS
-========================= */
-
-section{
-
-    padding: 30px;
-
-}
-
-section h2{
-
-    font-size:32px;
-
-    margin-bottom:20px;
-
-}
-
-h2{
-
-    font-family:"Galera Heading", "Cinzel", Georgia, serif;
-
-}
-
-/* =========================
-   Featured Artworks
+   FEATURED ARTWORKS
 ========================= */
 
 #featured{
     position:relative;
     overflow:hidden;
-
     margin:20px 15px;
-
     height:50vh;
-
     border-radius:20px;
 }
 
 #featured:hover{
-
     cursor:pointer;
-
 }
 
 #featured h2{
-
     position:relative;
     z-index:1;
-
     margin:0;
-
 }
 
 #popular-artists h2,
 #featured h2{
-
     text-align:center;
-
     left:0;
     top:0;
-
     width:100%;
-
 }
 
 #featured .featured-video{
-
     position:absolute;
     inset:0;
-
     width:100%;
     height:100%;
-
     object-fit:cover;
     object-position:50% 50%;
     scale:1.01;
-
     transform:none;
-
     z-index:-2;
-
 }
 
 /* Shine layer */
@@ -659,154 +520,44 @@ h2{
 }
 
 /* =========================
-   FOOTER
-========================= */
-
-footer{
-
-    text-align:center;
-
-    padding:35px;
-
-    background:#111;
-
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:900px){
-
-    header{
-
-        padding:25px;
-
-        flex-direction:column;
-
-        gap:20px;
-
-    }
-
-    nav ul{
-
-        gap:20px;
-
-        flex-wrap:wrap;
-
-        justify-content:center;
-
-    }
-
-    .hero-content h1{
-
-        font-size:55px;
-
-    }
-
-    .hero-content p{
-
-        font-size:17px;
-
-    }
-
-    .buttons{
-
-        flex-direction:column;
-
-        align-items:center;
-
-    }
-
-}
-
-.background-video{
-
-    position:absolute;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    transition:opacity 1s ease;
-
-}
-
-.video-a{
-
-    opacity:1;
-    z-index:-2;
-
-}
-
-.video-b{
-
-    opacity:0;
-    z-index:-1;
-
-}
-
-/* =========================
-   Popular Artists
+   POPULAR ARTISTS
 ========================= */
 
 #popular-artists{
-
     min-height: 530px;
-
 }
 
 .artists-row{
-
     display:flex;
     justify-content:center;
     align-items:flex-end;
-
     gap:18px;
-
     perspective:1400px;
-
 }
 
-/* ============================
-   Artist Cards
-============================ */
+/* ========= Artist Cards =========== */
 
 .artist-card{
     position: relative;
-
     width:230px;
     height:360px;
-
     overflow:hidden;
-
     border-radius:10px;
-
     cursor:pointer;
-
     transition:
         transform 1s ease,
         filter .45s ease;
-
 }
 
 .artist-card img{
-
     width:100%;
     height:100%;
-
     object-fit:cover;
-
     display:block;
-
 }
 
 
-/* ============================
-   Card Positions
-============================ */
+/* ======== Card Positions ========== */
 
 .artist-far-left{
     transform: translateY(0) rotateY(35deg);
@@ -829,28 +580,21 @@ footer{
 }
 
 
-/* ============================
-   Hover
-============================ */
+/* ======= Hover ======= */
 
 .artist-card:hover{
-
     transform:
         translateY(-10px)
         rotateY(0deg)
         scale(1.01);
 
     z-index:10;
-
 }
 
 .artist-card::after{
-
     content: "";
-
     position: absolute;
     inset: 0;
-
     background:
         radial-gradient(
             circle,
@@ -858,15 +602,11 @@ footer{
             rgba(0,0,0,.5) 65%,
             rgba(0,0,0,0.7) 100%
         );
-
     pointer-events: none;
-
     transition: opacity 0.4s ease;
-
 }
 
 .artist-center::after{
-
     background:
         radial-gradient(
             circle,
@@ -874,50 +614,34 @@ footer{
             rgba(0,0,0,.04) 72%,
             rgba(0,0,0,.12) 100%
         );
-
 }
 
 .artist-name{
-
     position:absolute;
-
     top:50%;
     left:50%;
-
     transform:translate(-50%,-50%);
-
     z-index:10;
-
     opacity:0;
-
     color:#fff;
-
     font-size:4rem;
     font-weight:300;
     letter-spacing:1px;
-
     text-align:center;
-
     transition:opacity .35s ease;
-
     pointer-events:none;
-
 }
 
 .artist-name{
-
     font-family:"Artist Font", Georgia, serif;
-
 }
 
 .artist-card:hover .artist-name{
-
     opacity:1;
-
 }
 
 /* ============================
-   About Section
+   ABOUT SECTION
 ============================ */
 
 .art-river {
@@ -935,7 +659,7 @@ footer{
 }
 
 /* ============================
-   Log In / Sign Up Window
+   Log In / Sign Up Pop UpWindow
 ============================ */
 
 /* ==========================================================================
@@ -998,23 +722,23 @@ footer{
 
 /* 4. Layered Close Button Interface Element */
 .modal-close-btn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: #ffffff; /* Translucent shield for legibility over white art paths */
-  backdrop-filter: blur(4px);
-  border: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #161616;
-  font-size: 18px;
-  transition: background-color 0.2s, transform 0.1s;
-  z-index: 10;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #ffffff; /* Translucent shield for legibility over white art paths */
+    backdrop-filter: blur(4px);
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #161616;
+    font-size: 18px;
+    transition: background-color 0.2s, transform 0.1s;
+    z-index: 10;
 }
 
 .modal-close-btn:hover {
@@ -1135,9 +859,7 @@ footer{
   color: #636f8b;
 }
 
-/* ==========================================
-   NEW ADDITION: Divider Lines & Email Layout
-========================================== */
+/* ========= NEW ADDITION: Divider Lines & Email Layout ========= */
 
 /* 1. The Horizontal Grid Line Splitter styling */
 .modal-auth-divider {
@@ -1351,28 +1073,71 @@ footer{
 	opacity:.7;
 }
 
+/* =========================
+   FLOATING SUPPORT BUTTON
+========================= */
+
+.support-fab{
+    position:fixed;
+    right:28px;
+    bottom:28px;
+
+    width:56px;
+    height:56px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:none;
+    border-radius:50%;
+
+    background:#ff6600;
+    color:#fff;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 14px 34px rgba(255,102,0,.35);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+    z-index:9998;
+}
+
+.support-fab:hover{
+    transform:translateY(-4px);
+    box-shadow:
+        0 20px 44px rgba(255,102,0,.45);
+}
+
+.support-fab:active{
+    transform:scale(.95);
+}
+
+.support-fab svg{
+    width:24px;
+    height:24px;
+}
+
 /* ==========================================
-   Support Window
+   SUPPORT POPUP WINDOW
 ========================================== */
 
 .support-overlay{
 	position:fixed;
 	inset:0;
-
 	display:flex;
 	justify-content:flex-end;
 	align-items:flex-end;
-
 	padding:28px;
-
 	background:rgba(0,0,0,.45);
 	backdrop-filter:blur(8px);
-
 	opacity:0;
 	pointer-events:none;
-
 	transition:.3s ease;
-
 	z-index:9999;
 }
 
@@ -1384,23 +1149,17 @@ footer{
 .support-popup{
 	width:430px;
 	height:760px;
-
 	display:flex;
 	flex-direction:column;
-
 	background:#171717;
-
 	border:1px solid rgba(255,255,255,.06);
 	border-radius:26px;
-
 	overflow:hidden;
-
 	box-shadow:
 		0 30px 90px rgba(0,0,0,.65),
 		0 0 45px rgba(255,102,0,.08);
 
 	transform:translateY(40px) scale(.96);
-
 	transition:
 		transform .4s cubic-bezier(.22,1,.36,1);
 }
@@ -1411,27 +1170,22 @@ footer{
 
 .support-banner{
 	position:relative;
-
 	height:210px;
 	flex-shrink:0;
-
 	overflow:hidden;
 }
 
 .support-banner-image{
 	width:100%;
 	height:100%;
-
 	object-fit:cover;
 	object-position:center 42%;
-
 	display:block;
 }
 
 .support-banner-overlay{
 	position:absolute;
 	inset:0;
-
 	background:
 		linear-gradient(
 			to bottom,
@@ -1443,24 +1197,17 @@ footer{
 
 .support-close-btn{
 	position:absolute;
-
 	top:16px;
 	right:16px;
-
 	width:38px;
 	height:38px;
-
 	border:none;
 	border-radius:50%;
-
 	background:rgba(255,255,255,.08);
 	backdrop-filter:blur(10px);
-
 	color:#fff;
 	font-size:24px;
-
 	cursor:pointer;
-
 	transition:.25s;
 }
 
@@ -1471,10 +1218,8 @@ footer{
 
 .support-body{
 	flex:1;
-
 	display:flex;
 	flex-direction:column;
-
 	padding:26px;
 }
 
@@ -1485,47 +1230,35 @@ footer{
 
 .support-title h2{
 	color:#fff;
-
 	font-size:27px;
 	font-weight:600;
-
 	margin-bottom:8px;
 }
 
 .support-title p{
 	color:#9d9d9d;
-
 	font-size:14px;
 	line-height:1.6;
 }
 
 .support-tabs{
 	position:relative;
-
 	display:flex;
-
 	padding:6px;
 	margin-bottom:24px;
-
 	background:#202020;
-
 	border:1px solid rgba(255,255,255,.05);
 	border-radius:14px;
 }
 
 .tab-indicator{
 	position:absolute;
-
 	top:6px;
 	left:6px;
-
 	width:calc(50% - 9px);
 	height:calc(100% - 12px);
-
 	background:linear-gradient(180deg,#ff7a1a,#ff6600);
-
 	border-radius:10px;
-
 	box-shadow:
 		0 10px 26px rgba(255,102,0,.28);
 
@@ -1538,23 +1271,15 @@ footer{
 .tab-btn{
 	position:relative;
 	z-index:2;
-
 	flex:1;
-
 	padding:12px 0;
-
 	background:none;
 	border:none;
-
 	border-radius:10px;
-
 	color:#9b9b9b;
-
 	font-size:14px;
 	font-weight:600;
-
 	cursor:pointer;
-
 	transition:color .25s;
 }
 
@@ -1568,30 +1293,21 @@ footer{
 
 .support-pages{
 	position:relative;
-
 	flex:1;
-
 	overflow:hidden;
 }
 
 .support-page{
 	position:absolute;
 	inset:0;
-
 	display:flex;
 	flex-direction:column;
-
 	overflow-y:auto;
-
 	padding-right:6px;
-
 	opacity:0;
 	visibility:hidden;
-
 	transform:translateX(30px);
-
 	pointer-events:none;
-
 	transition:
 		opacity .35s ease,
 		transform .35s ease;
@@ -1600,9 +1316,7 @@ footer{
 .support-page.active{
 	opacity:1;
 	visibility:visible;
-
 	transform:translateX(0);
-
 	pointer-events:auto;
 }
 
@@ -1618,18 +1332,12 @@ footer{
 .issue-card{
 	display:flex;
 	align-items:center;
-
 	gap:16px;
-
 	padding:18px;
-
 	background:#1f1f1f;
-
 	border:1px solid rgba(255,255,255,.05);
 	border-radius:18px;
-
 	cursor:pointer;
-
 	transition:.28s;
 }
 
@@ -1639,11 +1347,8 @@ footer{
 
 .issue-card:hover{
 	background:#252525;
-
 	border-color:rgba(255,102,0,.35);
-
 	transform:translateX(6px);
-
 	box-shadow:
 		0 14px 28px rgba(0,0,0,.28);
 }
@@ -1651,22 +1356,17 @@ footer{
 .issue-icon{
 	width:52px;
 	height:52px;
-
 	display:flex;
 	align-items:center;
 	justify-content:center;
-
 	background:rgba(255,102,0,.12);
-
 	border-radius:14px;
-
 	flex-shrink:0;
 }
 
 .issue-icon svg{
 	width:24px;
 	height:24px;
-
 	fill:#ff7a1a;
 }
 
@@ -1676,26 +1376,21 @@ footer{
 
 .issue-info h4{
 	color:#fff;
-
 	font-size:16px;
 	font-weight:600;
-
 	margin-bottom:4px;
 }
 
 .issue-info p{
 	color:#8e8e8e;
-
 	font-size:13px;
 	line-height:1.5;
 }
 
 .issue-arrow{
 	color:#ff7a1a;
-
 	font-size:20px;
 	font-weight:600;
-
 	transition:.25s;
 }
 
@@ -1706,29 +1401,21 @@ footer{
 #contact textarea{
 	width:100%;
 	height:145px;
-
 	padding:16px;
-
 	background:#202020;
-
 	border:1px solid rgba(255,255,255,.06);
 	border-radius:16px;
-
 	color:#fff;
-
 	font-size:14px;
 	font-family:inherit;
 	line-height:1.6;
-
 	outline:none;
 	resize:none;
-
 	transition:.25s;
 }
 
 #contact textarea:focus{
 	border-color:rgba(255,102,0,.45);
-
 	box-shadow:
 		0 0 0 4px rgba(255,102,0,.08);
 }
@@ -1736,20 +1423,13 @@ footer{
 .upload-box{
 	display:flex;
 	align-items:center;
-
 	gap:18px;
-
 	margin-top:18px;
-
 	padding:18px;
-
 	background:#1f1f1f;
-
 	border:1px dashed rgba(255,255,255,.12);
 	border-radius:18px;
-
 	cursor:pointer;
-
 	transition:.25s;
 }
 
@@ -1761,58 +1441,43 @@ footer{
 .upload-icon{
 	width:52px;
 	height:52px;
-
 	display:flex;
 	align-items:center;
 	justify-content:center;
-
 	background:rgba(255,102,0,.12);
-
 	border-radius:14px;
-
 	flex-shrink:0;
 }
 
 .upload-icon svg{
 	width:24px;
 	height:24px;
-
 	fill:#ff7a1a;
 }
 
 .upload-info h4{
 	color:#fff;
-
 	font-size:15px;
 	font-weight:600;
-
 	margin-bottom:5px;
 }
 
 .upload-info p{
 	color:#8f8f8f;
-
 	font-size:13px;
 }
 
 .send-btn{
 	margin-top:auto;
-
 	width:100%;
 	height:54px;
-
 	background:linear-gradient(180deg,#ff7a1a,#ff6600);
-
 	border:none;
 	border-radius:16px;
-
 	color:#fff;
-
 	font-size:15px;
 	font-weight:600;
-
 	cursor:pointer;
-
 	box-shadow:
 		0 14px 30px rgba(255,102,0,.22);
 
@@ -1821,7 +1486,6 @@ footer{
 
 .send-btn:hover{
 	transform:translateY(-2px);
-
 	box-shadow:
 		0 20px 40px rgba(255,102,0,.32);
 }
@@ -1833,3 +1497,169 @@ footer{
 body.support-open{
 	overflow:hidden;
 }
+
+/* ======= Footer ======= */
+
+footer{
+    text-align:center;
+    padding:35px;
+    background:#111;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   DESKTOP
+========================= */
+@media (min-width: 1200px) { }
+
+/* =========================
+   TABLET
+========================= */
+
+@media (min-width:769px) and (max-width:1024px){
+
+    /* ===== HERO ===== */
+    .hero{
+        height:85vh;
+    }
+
+    .hero-content{
+        width:75%;
+        max-width:760px;
+    }
+
+    .hero-title{
+        font-size:84px;
+    }
+
+    .hero-content p{
+        font-size:18px;
+        margin-bottom:32px;
+    }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width:768px){
+
+    /* ===== HEADER ===== */
+
+    header{
+        flex-direction:row;
+        padding:10px 18px;
+    }
+
+    /* ===== Hamburger Menu ===== */
+
+    .hamburger-btn{
+        display:block;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .brand{
+        gap:6px;
+        margin-left: 10px;
+        user-select:none;
+    }
+
+    .brand img{
+        width:30px;
+        height:30px;
+    }
+
+    .brand span{
+        font-size:19px;
+    }
+
+    /* ===== HERO ===== */
+
+    .hero{
+
+    }
+
+    .hero-title{
+        font-size:64px;
+        -webkit-text-stroke:.3px white;
+    }
+
+    .hero-content{
+        width:90%;
+        max-width:none;
+        top:47%;
+    }
+
+    .hero-content p{
+        font-size:16px;
+        line-height:1.7;
+        margin-bottom:28px;
+    }
+
+    .buttons{
+        flex-direction:column;
+        align-items:center;
+        gap:14px;
+    }
+
+    .login-btn,
+    .signup-btn{
+        width:220px;
+        height:48px;
+    }
+
+    .explore-btn{
+        bottom:30px;
+        font-size:15px;
+    }
+
+    /* ===== Floating Support Button ===== */
+
+    .support-fab{
+        width:52px;
+        height:52px;
+        right:18px;
+        bottom:18px;
+    }
+
+    .support-fab svg{
+        width:22px;
+        height:22px;
+    }
+
+    /* ===== FEATURED ===== */
+
+    #featured{
+
+    }
+
+    /* ===== POPULAR ARTISTS ===== */
+
+
+
+}
+
+/* =========================
+    SMALL PHONES
+========================= */
+@media (max-width: 480px) { }

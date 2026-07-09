@@ -5,9 +5,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Galera</title>
-
 		<link rel="stylesheet" href="galera.css">
-
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
@@ -17,92 +15,102 @@
 
 	<body>
 
-		<!-- Header -->
+		<!-- ==========================================
+			HEADER
+		========================================== -->
 		<header id="header">
 
-			<img src="Resources/Imgs/Galera Logo3.png" alt="GALERA" class="logo">
+			<!-- Left Header -->
+			<div class="header-left">
 
+				<!-- Hamburger Menu -->
+				<button class="hamburger-btn" id="hamburgerBtn" aria-label="Open navigation">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
+
+				<!-- Logo -->
+				<div class="brand">
+					<img src="Resources/Imgs/Galera Logo3.png" alt="Galera logo">
+					<span>Galera</span>
+				</div>
+
+			</div>
+
+			<!-- Navigation Menu -->
 			<nav>
-					<ul>
-							<li><a href="#">Gallery</a></li>
-							<li><a href="#">Artists</a></li>
-							<li><a href="#">Explore</a></li>
-							<li><a href="#">Community</a></li>
-					</ul>
-			</nav>
 
-			<button class="support-btn" id="my-support-trigger">
-				<span class="btn-inner">
-					<span class="text">Support</span>
-					<span class="icon">
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M3 12a9 9 0 0 1 18 0v5a2 2 0 0 1-2 2h-1v-7h3"></path>
-							<path d="M3 12v5a2 2 0 0 0 2 2h1v-7H3"></path>
-							<path d="M17 19a2 2 0 0 1-2 2h-2"></path>
-						</svg>
-					</span>
-				</span>
-			</button>
+				<!-- Navigation Links -->
+				<ul>
+					<li><a href="#">Gallery</a></li>
+					<li><a href="#">Artists</a></li>
+					<li><a href="#">Explore</a></li>
+					<li><a href="#">Community</a></li>
+				</ul>
+
+			</nav>
 
 		</header>
 
-		<!-- Hero -->
+		<!-- ===== HERO ===== -->
 		<section class="hero">
 
-				<!-- Background Video -->
-				<video class="background-video video-a" autoplay muted playsinline></video>
-				<video class="background-video video-b" muted playsinline></video>
+			<!-- Background Video -->
+			<video class="background-video video-a" autoplay muted playsinline></video>
+			<video class="background-video video-b" muted playsinline></video>
 
-				<!-- Dark Overlay -->
-				<div class="overlay"></div>
+			<!-- Dark Overlay -->
+			<div class="overlay"></div>
 
-				<!-- Hero Content -->
-				<div class="hero-content">
+			<!-- Hero Content -->
+			<div class="hero-content">
 
-					<h1 class="hero-title">GALERA</h1>
+				<!-- Title -->
+				<h1 class="hero-title">GALERA</h1>
 
-					<p>
-							Discover breathtaking artwork from creators around the world.
-							Upload your masterpieces, build your portfolio,
-							and inspire millions.
-					</p>
+				<!-- Description -->
+				<p>
+						Discover breathtaking artwork from creators around the world.
+						Upload your masterpieces, build your portfolio,
+						and inspire millions.
+				</p>
 
-					<div class="buttons">
+				<!-- Buttons -->
+				<div class="buttons">
+					<button class="login-btn" id="loginTrigger">
+						<span class="hotspot"></span>
+						<span class="text">Login</span>
+					</button>
 
-						<button class="login-btn" id="loginTrigger">
-
-							<span class="hotspot"></span>
-
-							<span class="text">Login</span>
-
-						</button>
-
-						<button class="signup-btn" id="signupTrigger">
-							Sign Up
-						</button>
-
-					</div>
-
+					<button class="signup-btn" id="signupTrigger">
+						Sign Up
+					</button>
 				</div>
 
+			</div>
+
 		</section>
 
 
-		<!-- Featured -->
+		<!-- ==========================================
+			FEATURED ARTWORKS
+		========================================== -->
+
 		<section id="featured">
 
-				<video class="featured-video" muted loop playsinline autoplay></video>
-
-				<div class="overlay"></div>
-
-				<h2>Featured Artworks</h2>
-
-				<button class="explore-btn">Explore More</button>
+			<video class="featured-video" muted loop playsinline autoplay></video>
+			<div class="overlay"></div>
+			<h2>Featured Artworks</h2>
+			<button class="explore-btn">Explore More</button>
 
 		</section>
 
 
-		<!-- Artists -->
+		<!-- ==========================================
+			POPULAR ARTISTS
+		========================================== -->
+
 		<section id="popular-artists">
 
 			<h2>Popular Artists</h2>
@@ -140,7 +148,7 @@
 
 
 		<!-- ==========================================
-			About
+			ABOUT SECTION
 		========================================== -->
 
 		<section id="about">
@@ -164,11 +172,8 @@
 		========================================== -->
 
 		<div class="modal-overlay" id="authModalOverlay">
-
 			<div class="modal-box">
-
 				<div class="modal-header-banner">
-
 					<img
 						src="Resources/Popular Artists/Ghost Blade/6.png"
 						class="banner-display-image"
@@ -177,127 +182,82 @@
 					<button class="modal-close-btn" id="closeModalTrigger">
 						&times;
 					</button>
-
 				</div>
 
-				<div class="modal-body-content email-auth-page">
+				<div class="modal-body-content">
 
 					<div class="brand-logo-container">
 						<img src="Resources/Imgs/Galera Logo3.png" class="brand-logo-image">
 						<span class="brand-name-text">GALERA</span>
 					</div>
 
-					<h2 class="email-title">Welcome Back</h2>
-
-					<p class="email-subtitle">
-						Sign in with your email to continue.
-					</p>
-
-					<div class="email-field">
-
-						<label>Email</label>
-
-						<input
-							type="email"
-							class="email-input"
-							placeholder="Enter your email">
-
-					</div>
-
-					<div class="email-field">
-
-						<div class="password-header">
-
-							<label>Password</label>
-
-							<a href="#" class="forgot-link">
-								Forgot Password?
-							</a>
-
-						</div>
-
-						<div class="password-input">
-
-							<input
-								type="password"
-								class="email-input"
-								placeholder="Enter your password">
-
-							<button type="button" class="toggle-password">
-								<i class="fa-regular fa-eye"></i>
-							</button>
-
-						</div>
-
-					</div>
-
-					<button class="auth-action-btn btn-email-submit">
-						Continue
+					<button class="auth-action-btn btn-google">
+						<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+							class="auth-icon"
+							alt="Google">
+						<span>Continue with Google</span>
 					</button>
 
-					<div class="email-footer">
+					<button class="auth-action-btn btn-apple">
+						<i class="fa-brands fa-apple"></i>
+						Continue with Apple
+					</button>
 
-						<button class="back-auth-btn">
-
-							<i class="fa-solid fa-arrow-left"></i>
-
-							Back
-
-						</button>
-
-						<p>
-
-							Don't have an account?
-
-							<a href="#">Sign Up</a>
-
-						</p>
-
+					<div class="modal-auth-divider">
+						<span class="divider-text">or</span>
 					</div>
 
+					<button class="auth-action-btn btn-email">
+						<i class="fa-solid fa-envelope"></i>
+						Continue with Email
+					</button>
+
+					<p class="legal-agreement-text">
+						By continuing, you agree to our
+						<a href="#">Terms of Service</a>
+						and acknowledge that you have read our
+						<a href="#">Privacy Policy</a>.
+					</p>
+
 				</div>
-
 			</div>
-
 		</div>
 
 		<!-- ==========================================
-			Support Window
+			SUPPORT POP UP WINDOW
 		========================================== -->
 
-		<div class="support-overlay hidden" id="supportOverlay">
-
+		<div class="support-overlay" id="supportOverlay">
 			<div class="support-popup">
 
+				<!-- Banner -->
 				<div class="support-banner">
-
 					<img
 						src="Resources/Imgs/Moto Girl Support Window.jpg"
 						alt="Support Banner"
-						class="support-banner-image">
+						class="support-banner-image"
+					>
 
 					<div class="support-banner-overlay"></div>
 
 					<button class="support-close-btn" id="close-popup">
 						&times;
 					</button>
-
 				</div>
 
 				<div class="support-body">
 
+					<!-- Header -->
 					<div class="support-title">
-
 						<h2>Support Center</h2>
 
 						<p>
 							Need help? Browse common solutions or contact our team.
 						</p>
-
 					</div>
 
+					<!-- Tabs -->
 					<div class="support-tabs">
-
 						<div class="tab-indicator"></div>
 
 						<button class="tab-btn active" data-tab="faq">
@@ -307,9 +267,9 @@
 						<button class="tab-btn" data-tab="contact">
 							Contact Support
 						</button>
-
 					</div>
 
+					<!-- Pages -->
 					<div class="support-pages">
 
 						<!-- ==========================================
@@ -317,9 +277,7 @@
 						========================================== -->
 
 						<div class="support-page active" id="faq">
-
 							<button class="issue-card">
-
 								<div class="issue-icon">
 									<svg viewBox="0 0 24 24">
 										<path d="M12 17a2 2 0 100 4 2 2 0 000-4zm6-7V8a6 6 0 10-12 0v2H4v12h16V10h-2zm-8-2a4 4 0 118 0v2H10V8z"/>
@@ -327,15 +285,11 @@
 								</div>
 
 								<div class="issue-info">
-
 									<h4>Account Access</h4>
-
 									<p>Password, login and verification</p>
-
 								</div>
 
 								<span class="issue-arrow">→</span>
-
 							</button>
 
 							<button class="issue-card">
@@ -347,19 +301,14 @@
 								</div>
 
 								<div class="issue-info">
-
 									<h4>Billing & Payments</h4>
-
 									<p>Subscriptions and purchases</p>
-
 								</div>
 
 								<span class="issue-arrow">→</span>
-
 							</button>
 
 							<button class="issue-card">
-
 								<div class="issue-icon">
 									<svg viewBox="0 0 24 24">
 										<path d="M12 3l8 4v5c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V7l8-4z"/>
@@ -367,19 +316,14 @@
 								</div>
 
 								<div class="issue-info">
-
 									<h4>Upload Artwork</h4>
-
 									<p>Publishing and media issues</p>
-
 								</div>
 
 								<span class="issue-arrow">→</span>
-
 							</button>
 
 							<button class="issue-card">
-
 								<div class="issue-icon">
 									<svg viewBox="0 0 24 24">
 										<path d="M12 2L1 21h22L12 2zm0 6v6m0 4h.01"/>
@@ -387,15 +331,11 @@
 								</div>
 
 								<div class="issue-info">
-
 									<h4>Report a Bug</h4>
-
 									<p>Something isn't working correctly</p>
-
 								</div>
 
 								<span class="issue-arrow">→</span>
-
 							</button>
 
 						</div>
@@ -416,47 +356,52 @@
 									id="support-files"
 									accept="image/png,image/jpeg,image/webp"
 									multiple
-									hidden>
+									hidden
+								>
 
 								<div class="upload-icon">
-
 									<svg viewBox="0 0 24 24">
 										<path d="M16.5 6.5l-7.8 7.8a3 3 0 104.2 4.2l8.5-8.5a5 5 0 10-7.1-7.1L5.1 12.1"/>
 									</svg>
-
 								</div>
 
 								<div class="upload-info">
-
 									<h4>Attach Screenshots</h4>
-
 									<p>PNG • JPG • WEBP (Max 3 files)</p>
-
 								</div>
-
 							</label>
 
 							<button class="send-btn">
 								Submit Ticket
 							</button>
-
 						</div>
-
 					</div>
-
 				</div>
-
 			</div>
-
 		</div>
 
-		<!-- Footer -->
+		<button class="support-fab" id="my-support-trigger">
+			<svg xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round">
+				<path d="M3 12a9 9 0 0 1 18 0v5a2 2 0 0 1-2 2h-1v-7h3"/>
+				<path d="M3 12v5a2 2 0 0 0 2 2h1v-7H3"/>
+				<path d="M17 19a2 2 0 0 1-2 2h-2"/>
+			</svg>
+		</button>
+
+		<!-- ==========================================
+			FOOTER
+		========================================== -->
 		<footer>
-
 				<p>© 2026 GALERA. All rights reserved.</p>
-
 		</footer>
-
 
 		<script src="galera.js"></script>
 	</body>
