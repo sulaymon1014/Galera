@@ -3,65 +3,28 @@
 ========================================== */
 
 /* ===== Video Sources ===== */
-const sources = [
-  "Resources/Vids/Lylian Head BG.mp4",
-  "Resources/Vids/Yan Haiqin Head BG.mp4"
-];
+const isMobile = window.innerWidth <= 768;
 
-/* ===== Video Elements ===== */
-const videoA = document.querySelector(".video-a");
-const videoB = document.querySelector(".video-b");
+const sources = isMobile
+  ? [
+      "Resources/Vids/Lylian & Yan Haiqin Hero BG Mobile.mp4"
+    ]
+  : [
+      "Resources/Vids/Lylian & Yan Haiqin Hero BG Desktop.mp4"
+    ];
 
-/* ===== Active Video State ===== */
-let active = videoA;
-let hidden = videoB;
+/* ===== Hero Video Element ===== */
+const heroVideo = document.querySelector(".hero-video");
 
-let index = 0;
+/* ===== Load Selected Video ===== */
+heroVideo.src = sources[0];
+heroVideo.load();
 
-/* ===== Initial Video Loading ===== */
-// Load first video
-active.src = sources[0];
-active.load();
-
-active.oncanplay = () => {
-  active.play();
+/* ===== Play When Ready ===== */
+heroVideo.oncanplay = () => {
+    heroVideo.playbackRate = 1;
+    heroVideo.play();
 };
-
-active.oncanplay = () => {
-  active.playbackRate = 0.8;
-  active.play();
-};
-
-// Preload second video immediately
-hidden.src = sources[1];
-hidden.load();
-
-// When active video is almost over
-active.addEventListener("timeupdate", handleTransition);
-
-/* ===== Video Transition ===== */
-function handleTransition(){
-  if(active.duration - active.currentTime <= 1){
-    active.removeEventListener("timeupdate", handleTransition);
-    hidden.currentTime = 0;
-    hidden.play();
-    hidden.style.opacity = "1";
-    active.style.opacity = "0";
-
-    setTimeout(() => {
-      active.pause();
-      index = (index + 1) % sources.length;
-      let temp = active;
-      active = hidden;
-      hidden = temp;
-      hidden.src = sources[(index + 1) % sources.length];
-      hidden.load();
-      active.addEventListener("timeupdate", handleTransition);
-    },1000);
-
-  }
-
-}
 
 /* ==========================================
   HEADER
@@ -132,8 +95,15 @@ buttons.forEach(btn => {
 
 /* ===== Featured Background Video ===== */
 const featuredVideo = document.querySelector(".featured-video");
-featuredVideo.src = "Resources/Vids/Nizhan Future Featured Artists BG.mp4";
+featuredVideo.src = isMobile
+  ? "Resources/Vids/Nizhan Future Featured Artists BG Mobile.mp4"
+  : "Resources/Vids/Nizhan Future Featured Artists BG Desktop.mp4";
 featuredVideo.load();
+
+featuredVideo.oncanplay = () => {
+  featuredVideo.playbackRate = 1.1;
+  featuredVideo.play();
+};
 
 
 /* ==========================================
