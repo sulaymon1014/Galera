@@ -14,13 +14,22 @@ body{
 }
 
 /* =========================
+   UI HIDDEN BY DEFAULT
+========================= */
+
+.mobile-menu {
+    display: none;
+}
+
+/* =========================
    FONTS
 ========================= */
 
 body{
     font-family:Arial, Helvetica, sans-serif;
     color:white;
-    background:black;
+    background:#000;
+    overflow-x:hidden;
 }
 
 @font-face{
@@ -65,20 +74,21 @@ h2{
     width:100%;
     height:100vh;
     overflow:hidden;
+    isolation:isolate;
 }
 
 /* ===== Background Video ===== */
 
 .background-video{
     position:absolute;
-    top:0;
-    left:0;
     inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
     z-index:-2;
     transition:opacity 1s ease;
+    transform:translateZ(0);
+    backface-visibility:hidden;
 }
 
 .video-a{
@@ -99,6 +109,8 @@ h2{
     inset:0;
     background:rgba(0,0,0,.25);
     z-index:-1;
+    transform:translateZ(0);
+    pointer-events:none;
 }
 
 /* =========================
@@ -106,21 +118,25 @@ h2{
 ========================= */
 
 header{
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     width:100%;
     display:flex;
     align-items:center;
-    padding:12px 70px;
-    position:fixed;
     justify-content:space-between;
-    background:transparent;
+    padding:12px 70px;
+    background:rgba(0,0,0,.90);
     transition:
         background-color .35s ease,
         transform .35s ease,
         opacity .35s ease;
-    z-index:1000;
+
+    z-index:10000;
+    isolation:isolate;
+    transform:translateZ(0);
+    will-change:transform;
+    backface-visibility:hidden;
 }
 
 .header-left{
@@ -1609,6 +1625,7 @@ html{
 
     header{
         flex-direction:row;
+        height:64px;
         padding:10px 18px;
     }
 
@@ -1640,7 +1657,8 @@ html{
     /* ===== HERO ===== */
 
     .hero{
-
+        margin-top:-64px;
+        padding-top:64px;
     }
 
     .hero-title{
@@ -1677,18 +1695,162 @@ html{
         font-size:15px;
     }
 
-    /* ===== Floating Support Button ===== */
+        /* =====  MOBILE MENU  ===== */
 
-    .support-fab{
-        width:52px;
-        height:52px;
-        right:18px;
-        bottom:18px;
+    .mobile-menu{
+        display:flex;
+        position:fixed;
+        inset:0;
+        flex-direction:column;
+        background: #000;
+        opacity:0;
+        visibility:hidden;
+        pointer-events:none;
+        transition: opacity .3s ease;
+        z-index:99999;
     }
 
-    .support-fab svg{
-        width:22px;
-        height:22px;
+    .mobile-menu.active{
+        opacity:1;
+        visibility:visible;
+        pointer-events:auto;
+    }
+
+    /* Header */
+    .mobile-menu-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+    }
+
+    .mobile-close-btn{
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .mobile-brand{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .mobile-brand img{
+        width: 24px;
+        height: 24px;
+    }
+
+    .mobile-brand span{
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* Content */
+    .mobile-menu-content{
+        flex: 1;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobile-nav{
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .nav-group a{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+
+    .nav-group i{
+        font-size: 14px;
+        color: rgba(255,255,255,0.5);
+    }
+
+    /* Support Button */
+    .mobile-support-btn{
+        margin-top: auto;
+        align-self: flex-end;
+        width: 44px;
+        height: 44px;
+        background: none;
+        border: none;
+        color: rgba(255,255,255,0.7);
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    /* Footer */
+    .mobile-menu-footer{
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .mobile-lang-btn{
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    .mobile-lang-btn i{
+        font-size: 12px;
+        color: rgba(255,255,255,0.5);
+    }
+
+    /* Using the existing Signup Button style but making it wider for mobile footer if needed */
+    .mobile-menu-footer .signup-btn{
+        width: auto;
+        padding: 0 24px;
+        font-size: 15px;
+    }
+
+    /* Navigation Animation Re-adjustment */
+    .mobile-nav .nav-group{
+        opacity:0;
+        transform:translateY(10px);
+        transition: all .4s ease;
+    }
+
+    .mobile-menu.active .mobile-nav .nav-group{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    .mobile-menu.active .mobile-nav .nav-group:nth-child(1){ transition-delay:.1s; }
+    .mobile-menu.active .mobile-nav .nav-group:nth-child(2){ transition-delay:.15s; }
+    .mobile-menu.active .mobile-nav .nav-group:nth-child(3){ transition-delay:.2s; }
+    .mobile-menu.active .mobile-nav .nav-group:nth-child(4){ transition-delay:.25s; }
+
+    /* Disable Scroll */
+    body.menu-open{
+        overflow:hidden;
     }
 
     /* ===== FEATURED ===== */

@@ -64,11 +64,24 @@ updateHeader();
 window.addEventListener("scroll", updateHeader);
 
 /* ===== Hamburger Menu ===== */
-const hamburgerBtn = document.getElementById("hamburgerBtn");
 
-// Toggle Hamburger Animation
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.querySelector(".mobile-menu");
+
+// Toggle Mobile Menu
 hamburgerBtn.addEventListener("click", () => {
   hamburgerBtn.classList.toggle("active");
+  mobileMenu.classList.toggle("active");
+  document.body.classList.toggle("menu-open");
+});
+
+// Close Menu After Clicking a Link
+document.querySelectorAll(".mobile-nav a").forEach(link => {
+  link.addEventListener("click", () => {
+    hamburgerBtn.classList.remove("active");
+    mobileMenu.classList.remove("active");
+    document.body.classList.remove("menu-open");
+  });
 });
 
 /* ==========================================
