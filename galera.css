@@ -14,14 +14,6 @@ body{
 }
 
 /* =========================
-   UI HIDDEN BY DEFAULT
-========================= */
-
-.mobile-menu {
-    display: none;
-}
-
-/* =========================
    FONTS
 ========================= */
 
@@ -126,13 +118,17 @@ header{
     align-items:center;
     justify-content:space-between;
     padding:12px 70px;
-    background:rgba(0,0,0,.90);
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(28px);
+    -webkit-backdrop-filter:blur(28px);
+
     transition:
         background-color .35s ease,
         transform .35s ease,
         opacity .35s ease;
 
-    z-index:10000;
+    z-index:100001;
     isolation:isolate;
     transform:translateZ(0);
     will-change:transform;
@@ -169,40 +165,48 @@ header.scrolled .logo{
     background:none;
     cursor:pointer;
 
-    transition:transform .3s ease;
+    position: relative;
+    z-index: 100003;
+    transition: transform .3s ease;
+
+    margin-left:0;
+    margin-right:4px;
+    flex-shrink:0;
 }
 
 
 .hamburger-btn span{
     display:block;
-    width:22px;
+    width:24px;
     height:2px;
     margin:5px auto;
 
     background:#fff;
     border-radius:2px;
+    transform-origin: center;
 
     transition:
-        transform 0.3s cubic-bezier(.68,-0.55,.27,1.55),
+        transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55),
         opacity 0.2s ease;
 }
 
 
-/* ===== Hamburger Active State ===== */
+/* ===== Hamburger Active State (X Animation) ===== */
 .hamburger-btn.active{
-    transform:rotate(90deg);
+    transform: rotate(90deg);
 }
 
 .hamburger-btn.active span:nth-child(1){
-    transform:translateY(7px) rotate(45deg);
+    transform:translateY(6px) rotate(45deg);
 }
 
 .hamburger-btn.active span:nth-child(2){
     opacity:0;
+    transform:scale(0);
 }
 
 .hamburger-btn.active span:nth-child(3){
-    transform:translateY(-7px) rotate(-45deg);
+    transform:translateY(-6px) rotate(-45deg);
 }
 
 /* ===== Brand Logo ===== */
@@ -228,9 +232,9 @@ header.scrolled .logo{
 /* ======= Right Side ======= */
 
 nav{
-    display:flex;
     align-items:center;
     gap:35px;
+    display: flex;
     margin-left:auto;
     user-select: none;
 }
@@ -1616,54 +1620,83 @@ html{
 
 }
 
-/* =========================
-   MOBILE
-========================= */
+    /* =========================
+    MOBILE
+    ========================= */
+
+.mobile-menu{
+    display:none;
+}
+
 @media (max-width:768px){
 
-    /* ===== HEADER ===== */
+    /* ==========================================
+       HEADER
+    ========================================== */
 
     header{
-        flex-direction:row;
-        height:64px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+
+        height:54px;
         padding:10px 18px;
+
+        flex-direction:row;
     }
 
-    /* ===== Hamburger Menu ===== */
+    /* Hamburger */
 
     .hamburger-btn{
         display:block;
+
+        width:22px;
+        height:28px;
+
+        margin:0;
+        padding:0;
     }
+
+    .hamburger-btn span{
+        width:20px;
+        margin:4px auto;
+    }
+
+    /* Brand */
+
+    .header-left{
+        gap:18px;
+        padding-left:0;
+    }
+
+    .brand{
+        gap:6px;
+        user-select:none;
+    }
+
+    .brand img{
+        width:26px;
+        height:26px;
+    }
+
+    .brand span{
+        font-size:22px;
+        font-family:"Cinzel", serif;
+    }
+
+    /* Navigation */
 
     nav{
         display:none;
     }
 
-    .brand{
-        gap:6px;
-        margin-left: 10px;
-        user-select:none;
-    }
-
-    .brand img{
-        width:30px;
-        height:30px;
-    }
-
-    .brand span{
-        font-size:19px;
-    }
-
-    /* ===== HERO ===== */
+    /* ==========================================
+       HERO
+    ========================================== */
 
     .hero{
         margin-top:-64px;
         padding-top:64px;
-    }
-
-    .hero-title{
-        font-size:64px;
-        -webkit-text-stroke:.3px white;
     }
 
     .hero-content{
@@ -1672,13 +1705,21 @@ html{
         top:47%;
     }
 
+    .hero-title{
+        font-size:64px;
+        -webkit-text-stroke:.3px white;
+    }
+
     .hero-content p{
         font-size:16px;
         line-height:1.7;
         margin-bottom:28px;
     }
 
+    /* Hero Buttons */
+
     .buttons{
+        display:flex;
         flex-direction:column;
         align-items:center;
         gap:14px;
@@ -1695,163 +1736,189 @@ html{
         font-size:15px;
     }
 
-        /* =====  MOBILE MENU  ===== */
+    /* ==========================================
+       MOBILE MENU
+    ========================================== */
 
     .mobile-menu{
-        display:flex;
         position:fixed;
         inset:0;
+
+        display:flex;
         flex-direction:column;
-        background: #000;
+
+        width:100%;
+        height:100dvh;
+
+        background:rgba(0,0,0,.72);
+        backdrop-filter:blur(28px);
+        -webkit-backdrop-filter:blur(28px);
+
         opacity:0;
         visibility:hidden;
         pointer-events:none;
-        transition: opacity .3s ease;
-        z-index:99999;
+
+        transform:translateY(-16px);
+
+        transition:
+            opacity .35s ease,
+            transform .35s ease,
+            visibility .35s ease;
+
+        z-index:99990;
     }
 
     .mobile-menu.active{
         opacity:1;
         visibility:visible;
         pointer-events:auto;
-    }
 
-    /* Header */
-    .mobile-menu-header{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px 20px;
-    }
-
-    .mobile-close-btn{
-        background: none;
-        border: none;
-        color: #fff;
-        font-size: 24px;
-        cursor: pointer;
-    }
-
-    .mobile-brand{
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .mobile-brand img{
-        width: 24px;
-        height: 24px;
-    }
-
-    .mobile-brand span{
-        font-size: 18px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-    }
-
-    /* Content */
-    .mobile-menu-content{
-        flex: 1;
-        padding: 40px 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .mobile-nav{
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-    }
-
-    .nav-group a{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #fff;
-        text-decoration: none;
-        font-size: 18px;
-        font-weight: 500;
-        opacity: 0.9;
-    }
-
-    .nav-group i{
-        font-size: 14px;
-        color: rgba(255,255,255,0.5);
-    }
-
-    /* Support Button */
-    .mobile-support-btn{
-        margin-top: auto;
-        align-self: flex-end;
-        width: 44px;
-        height: 44px;
-        background: none;
-        border: none;
-        color: rgba(255,255,255,0.7);
-        font-size: 20px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-
-    /* Footer */
-    .mobile-menu-footer{
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .mobile-lang-btn{
-        background: none;
-        border: none;
-        color: #fff;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        cursor: pointer;
-    }
-
-    .mobile-lang-btn i{
-        font-size: 12px;
-        color: rgba(255,255,255,0.5);
-    }
-
-    /* Using the existing Signup Button style but making it wider for mobile footer if needed */
-    .mobile-menu-footer .signup-btn{
-        width: auto;
-        padding: 0 24px;
-        font-size: 15px;
-    }
-
-    /* Navigation Animation Re-adjustment */
-    .mobile-nav .nav-group{
-        opacity:0;
-        transform:translateY(10px);
-        transition: all .4s ease;
-    }
-
-    .mobile-menu.active .mobile-nav .nav-group{
-        opacity:1;
         transform:translateY(0);
     }
 
-    .mobile-menu.active .mobile-nav .nav-group:nth-child(1){ transition-delay:.1s; }
-    .mobile-menu.active .mobile-nav .nav-group:nth-child(2){ transition-delay:.15s; }
-    .mobile-menu.active .mobile-nav .nav-group:nth-child(3){ transition-delay:.2s; }
-    .mobile-menu.active .mobile-nav .nav-group:nth-child(4){ transition-delay:.25s; }
+    /* ==========================================
+       MOBILE MENU HEADER
+    ========================================== */
 
-    /* Disable Scroll */
-    body.menu-open{
-        overflow:hidden;
+    .mobile-menu-header{
+
+        display:flex;
+        align-items:center;
+        justify-content:flex-start;
+
+        height:56px;
+        min-height:unset;
+
+        padding:0 22px;
+
+        flex-shrink:0;
     }
+
+    .mobile-menu-header .header-left{
+        display:flex;
+        align-items:center;
+        gap:18px;
+    }
+
+    .mobile-menu-header .brand{
+        display:flex;
+        align-items:center;
+        gap:10px;
+    }
+
+    .mobile-menu-header .brand img{
+        width:34px;
+        height:34px;
+    }
+
+    .mobile-menu-header .brand span{
+        font-size:18px;
+        font-weight:500;
+    }
+
+    /* ==========================================
+       MOBILE NAVIGATION
+    ========================================== */
+
+    .mobile-menu-nav{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+
+        width:100%;
+
+        margin-top:18px;
+        padding:0 22px;
+    }
+
+    .menu-item{
+
+        display:flex;
+        align-items:center;
+        justify-content:flex-start;
+
+        width:100%;
+
+        padding:12px 0;
+        gap: 8px;
+
+        color:#fff;
+        text-decoration:none;
+
+        font-size:18px;
+        font-weight:500;
+
+        letter-spacing:.2px;
+    }
+
+    .menu-item:hover{
+        opacity:.75;
+    }
+
+    .menu-item i{
+        font-size:11px;
+        opacity:.8;
+        transition:transform .25s ease;
+    }
+
+    .menu-item:hover i{
+        transform:rotate(180deg);
+    }
+
+    .mobile-menu-fill{
+        flex:1;
+    }
+
+    /* ==========================================
+       MOBILE MENU FOOTER
+    ========================================== */
+
+    .mobile-menu-footer{
+
+        display:flex;
+        flex-direction:row;
+
+        align-items:center;
+        justify-content:space-between;
+
+        padding:24px;
+    }
+
+    .language-btn{
+
+        width:auto;
+        height:auto;
+
+        padding:0;
+
+        background:none;
+        border:none;
+
+        font-size:16px;
+        font-weight:500;
+
+        color:#fff;
+    }
+
+    .language-btn:hover{
+        opacity:.75;
+    }
+
+    .language-btn i{
+        font-size:12px;
+        opacity:.8;
+    }
+
+    .mobile-signup{
+
+        width:160px;
+        height:46px;
+
+        margin:0;
+
+        align-self:flex-end;
+    }
+
 
     /* ===== FEATURED ===== */
 
@@ -1860,8 +1927,6 @@ html{
     }
 
     /* ===== POPULAR ARTISTS ===== */
-
-
 
 }
 
