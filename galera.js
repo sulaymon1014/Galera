@@ -1,4 +1,19 @@
 /* ==========================================
+   MOBILE INITIAL VIEWPORT HEIGHT
+========================================== */
+
+// Save the initial visible browser height.
+// This value does NOT change when the browser
+// address bar hides while scrolling.
+
+if (window.innerWidth <= 768) {
+    document.documentElement.style.setProperty(
+        "--initial-vh",
+        `${window.innerHeight}px`
+    );
+}
+
+/* ==========================================
   HERO BACKGROUND VIDEO
 ========================================== */
 
@@ -373,47 +388,42 @@ document.querySelectorAll(".artist-card").forEach(card => {
 /* ======= AUTHENTICATION MODAL ENGINE ====== */
 
 (function() {
-  // 1. Target all structural interface triggers
-  const loginBtn = document.getElementById('loginTrigger');
-  const signupBtn = document.getElementById('signupTrigger');
-  const closeBtn = document.getElementById('closeModalTrigger');
-  const overlay = document.getElementById('authModalOverlay');
+  const joinGaleraBtn = document.getElementById("joinGaleraBtn");
+  const mobileJoinGaleraBtn = document.getElementById("mobileJoinGaleraBtn");
 
-  if (!overlay || !closeBtn) return;
+  const closeBtn = document.getElementById("closeModalTrigger");
+  const overlay = document.getElementById("authModalOverlay");
 
-  // 2. Core action functions
-  function openModal(e) {
-    if (e) e.preventDefault(); // Prevents accidental page jumps if using <a> tags
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Locks background page scrolling
+  function openModal(e){
+      if(e) e.preventDefault();
+      overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+
+      if (typeof toggleMenu === "function") {
+          toggleMenu(false);
+      }
   }
 
-  function closeModal() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = ''; // Restores window scroll
+  function closeModal(){
+      overlay.classList.remove("active");
+      document.body.style.overflow = "";
   }
 
-  // 3. Event Listeners binding
-  if (loginBtn) {
-    loginBtn.addEventListener('click', openModal);
-  }
-  
-  if (signupBtn) {
-    signupBtn.addEventListener('click', openModal);
-  }
+  joinGaleraBtn?.addEventListener("click", openModal);
+  mobileJoinGaleraBtn?.addEventListener("click", openModal);
 
-  // Close triggers
-  closeBtn.addEventListener('click', closeModal);
-  
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal();
+  closeBtn.addEventListener("click", closeModal);
+
+  overlay.addEventListener("click", e => {
+      if(e.target === overlay){
+          closeModal();
+      }
   });
 
-  // Global ESC key listener
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('active')) {
-      closeModal();
-    }
+  document.addEventListener("keydown", e => {
+      if(e.key === "Escape"){
+          closeModal();
+      }
   });
 })();
 
