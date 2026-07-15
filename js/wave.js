@@ -12,16 +12,16 @@
   const ctx = canvas.getContext('2d');
 
   const imageURLs = [
-    'Resources/Popular Artists/WLOP/5.png',
-    'Resources/Popular Artists/Penguln322/3.png',
-    'Resources/Popular Artists/Ghost Blade/6.png',
-    'Resources/Popular Artists/Nizhan/4.png',
-    'Resources/Popular Artists/Aeolian/5.png',
-    'Resources/Popular Artists/WLOP/3.png',
-    'Resources/Popular Artists/Ghost Blade/4.png',
-    'Resources/Popular Artists/Penguln322/6.png',
-    'Resources/Popular Artists/Nizhan/5.png',
-    'Resources/Popular Artists/Aeolian/3.png'
+    'Resources/Popular Artists Small/WLOP/5.jpg',
+    'Resources/Popular Artists Small/Penguln322/3.jpg',
+    'Resources/Popular Artists Small/Ghost Blade/6.jpg',
+    'Resources/Popular Artists Small/Nizhan/4.jpg',
+    'Resources/Popular Artists Small/Aeolian/5.jpg',
+    'Resources/Popular Artists Small/WLOP/3.jpg',
+    'Resources/Popular Artists Small/Ghost Blade/4.jpg',
+    'Resources/Popular Artists Small/Penguln322/6.jpg',
+    'Resources/Popular Artists Small/Nizhan/5.jpg',
+    'Resources/Popular Artists Small/Aeolian/3.jpg'
   ];
 
   const images = [];
@@ -50,7 +50,9 @@
   // Reads the CSS height so the wave stays centered when the canvas
   // shrinks on mobile/tablet.
   function resize() {
-    const dpr = window.devicePixelRatio;
+    // Cap at 2x: 3x phone panels quadruple the pixel work for
+    // no visible gain on a moving canvas
+    const dpr = Math.min(window.devicePixelRatio, 2);
     canvas.width = canvas.clientWidth * dpr;
     canvas.height = canvas.clientHeight * dpr;
     ctx.scale(dpr, dpr);
@@ -65,16 +67,23 @@
     if (imagesRequested) return;
     imagesRequested = true;
 
-    imageURLs.forEach(url => {
+    imageURLs.forEach((url, i) => {
       const img = new Image();
       img.src = url;
       img.onload = () => {
+        // Pre-scale once to draw size (2x for sharpness) so the
+        // animation loop never rescales the source bitmap per frame
+        const off = document.createElement('canvas');
+        off.width = cardWidth * 2;
+        off.height = cardHeight * 2;
+        off.getContext('2d').drawImage(img, 0, 0, off.width, off.height);
+        images[i] = off;
+
         imagesLoaded++;
         if (imagesLoaded === imageURLs.length) {
           initWaveAnimation();
         }
       };
-      images.push(img);
     });
   }
 
