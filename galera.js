@@ -216,8 +216,7 @@ document.querySelectorAll(".artist-card").forEach(card => {
   const img = card.querySelector("img");
   const artist = img.dataset.artist;
   const images = artworks[artist];
-  console.log("Artist:", artist);
-  console.log("Images:", images);
+  if (!images) return;
   const firstImage = img.src;
   let interval;
   let index = -1;
@@ -236,7 +235,7 @@ document.querySelectorAll(".artist-card").forEach(card => {
   card.addEventListener("mouseleave", () => {
     clearInterval(interval);
     img.src = firstImage;
-    index = 0;
+    index = -1;
   });
 
 });
@@ -268,11 +267,23 @@ document.querySelectorAll(".artist-card").forEach(card => {
   const images = [];
   let imagesLoaded = 0;
 
-  // Handles sharp rendering on high-res / mobile retina displays
+  // Math config to closely replicate the flow seen in image_ad9aeb.png
+  const wave = {
+    amplitude: 75,     // Vertical peak height
+    frequency: 0.0065, // Wave frequency width across the display
+    yOffset: 260       // Center baseline position
+  };
+
+  // Handles sharp rendering on high-res / mobile retina displays.
+  // Reads the CSS height so the wave stays centered when the canvas
+  // shrinks on mobile/tablet.
   function resize() {
-    canvas.width = canvas.clientWidth * window.devicePixelRatio;
-    canvas.height = 550 * window.devicePixelRatio; 
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    const dpr = window.devicePixelRatio;
+    canvas.width = canvas.clientWidth * dpr;
+    canvas.height = canvas.clientHeight * dpr;
+    ctx.scale(dpr, dpr);
+    wave.yOffset = canvas.clientHeight / 2;
+    wave.amplitude = Math.min(75, canvas.clientHeight * 0.14);
   }
   window.addEventListener('resize', resize);
   resize();
@@ -289,13 +300,6 @@ document.querySelectorAll(".artist-card").forEach(card => {
     };
     images.push(img);
   });
-
-  // Math config to closely replicate the flow seen in image_ad9aeb.png
-  const wave = {
-    amplitude: 75,     // Vertical peak height
-    frequency: 0.0065, // Wave frequency width across the display
-    yOffset: 260       // Center baseline position
-  };
 
   function getWaveY(x) {
     return wave.yOffset + Math.sin(x * wave.frequency) * wave.amplitude + Math.cos(x * 0.0016) * 30;
@@ -329,7 +333,7 @@ document.querySelectorAll(".artist-card").forEach(card => {
   }
 
   function animateWave() {
-    ctx.clearRect(0, 0, canvas.clientWidth, 550);
+    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 
     cards.forEach(card => {
       card.x -= speed;

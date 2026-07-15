@@ -158,6 +158,13 @@ header.header-hidden{
     transform:translateY(-18px);
     pointer-events:none;
 }
+
+/* Keep the header (and its close button) visible while the menu is open */
+header.menu-open{
+    opacity:1;
+    transform:none;
+    pointer-events:auto;
+}
 header.scrolled{
     padding:10px 70px;
 }
@@ -711,6 +718,7 @@ nav a:hover::after{
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 16px;
   z-index: 9999; /* Ensures structural placement stays above all canvas environments */
   opacity: 0;
   pointer-events: none;
@@ -728,8 +736,9 @@ nav a:hover::after{
   background-color: #161616;
   width: 100%;
   max-width: 440px;
+  max-height: calc(100dvh - 32px);
   border-radius: 24px;
-  overflow: hidden;
+  overflow: hidden auto;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
   transform: scale(0.9);
   transition: transform 0.3s ease;
@@ -1182,6 +1191,7 @@ nav a:hover::after{
 .support-popup{
 	width:430px;
 	height:760px;
+	max-height:calc(100dvh - 56px);
 	display:flex;
 	flex-direction:column;
 	background:#171717;
@@ -1527,8 +1537,14 @@ nav a:hover::after{
 	transform:translateY(0);
 }
 
-body.support-open{
+body.support-open,
+body.menu-open{
 	overflow:hidden;
+}
+
+/* Keep the support button reachable above the open mobile menu */
+.support-fab.menu-visible{
+	z-index:99991;
 }
 
 /* ======= Footer ======= */
@@ -1606,16 +1622,34 @@ html{
 ========================= */
 @media (min-width: 1200px) { }
 
+/* Narrow desktops: shrink artist cards so all five fit without overflow */
+@media (min-width:1025px) and (max-width:1366px){
+
+    .artist-card{
+        width:min(230px, calc(20vw - 30px));
+        height:auto;
+        aspect-ratio:23/36;
+    }
+
+    .artist-name{
+        font-size:3rem;
+    }
+
+}
+
 /* =========================
    TABLET
 ========================= */
 
 @media (min-width:769px) and (max-width:1024px){
 
-    /* ===== HERO ===== */
-    .hero{
-        
+    /* ===== HEADER ===== */
+
+    header{
+        padding:12px 32px;
     }
+
+    /* ===== HERO ===== */
 
     .hero-content{
         width:75%;
@@ -1629,6 +1663,64 @@ html{
     .hero-content p{
         font-size:18px;
         margin-bottom:32px;
+    }
+
+    /* ===== POPULAR ARTISTS ===== */
+
+    #popular-artists{
+        min-height:unset;
+        padding:30px 0;
+    }
+
+    #popular-artists h2{
+        padding:0 30px;
+    }
+
+    /* Flat, swipeable card row (the 3D fan needs more width than a tablet has) */
+    .artists-row{
+        justify-content:flex-start;
+        align-items:stretch;
+        gap:16px;
+        padding:16px 30px;
+        perspective:none;
+
+        overflow-x:auto;
+        scroll-snap-type:x proximity;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+    }
+
+    .artists-row::-webkit-scrollbar{
+        display:none;
+    }
+
+    .artist-card{
+        flex:0 0 200px;
+        width:200px;
+        height:315px;
+        scroll-snap-align:center;
+    }
+
+    .artist-far-left,
+    .artist-left,
+    .artist-center,
+    .artist-right,
+    .artist-far-right{
+        transform:none;
+    }
+
+    .artist-card:hover{
+        transform:translateY(-6px);
+    }
+
+    .artist-name{
+        font-size:2.6rem;
+    }
+
+    /* ===== ABOUT ===== */
+
+    #cardWaveCanvas{
+        height:460px;
     }
 
 }
@@ -1720,7 +1812,7 @@ html{
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: red;
+        background-color: #000;
     }
     .background-video{
         display: block;
@@ -1743,7 +1835,6 @@ html{
     }
 
     .hero-content h1{
-        font-size:14;
         margin-bottom:8px;
     }
 
@@ -1766,15 +1857,29 @@ html{
         font-size:14px;
     }
 
+    /* ===== SECTIONS ===== */
+
+    section{
+        padding:22px 18px;
+    }
+
+    section h2{
+        font-size:26px;
+    }
+
     /* ===== FEATURED ===== */
 
     #featured{
-
+        height:auto;
+        aspect-ratio:16/9;
+        min-height:215px;
+        margin:16px 12px;
+        padding:18px;
     }
 
     .explore-btn{
-        bottom:30px;
-        font-size:15px;
+        bottom:14px;
+        font-size:14px;
     }
     
     /* ==========================================
@@ -1962,9 +2067,127 @@ html{
 
     /* ===== POPULAR ARTISTS ===== */
 
+    #popular-artists{
+        min-height:unset;
+        padding:26px 0 34px;
+    }
+
+    #popular-artists h2{
+        padding:0 18px;
+    }
+
+    /* Flat, swipeable card row on phones */
+    .artists-row{
+        justify-content:flex-start;
+        align-items:stretch;
+        gap:12px;
+        padding:12px 18px;
+        perspective:none;
+
+        overflow-x:auto;
+        scroll-snap-type:x mandatory;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+    }
+
+    .artists-row::-webkit-scrollbar{
+        display:none;
+    }
+
+    .artist-card{
+        flex:0 0 190px;
+        width:190px;
+        height:300px;
+        scroll-snap-align:center;
+    }
+
+    .artist-far-left,
+    .artist-left,
+    .artist-center,
+    .artist-right,
+    .artist-far-right{
+        transform:none;
+    }
+
+    .artist-card:hover{
+        transform:none;
+    }
+
+    .artist-name{
+        font-size:2.4rem;
+    }
+
+    /* ===== ABOUT ===== */
+
+    #about p{
+        font-size:15px;
+    }
+
+    #cardWaveCanvas{
+        height:400px;
+    }
+
+    /* ===== SUPPORT POPUP (bottom sheet) ===== */
+
+    .support-overlay{
+        padding:0;
+        justify-content:center;
+    }
+
+    .support-popup{
+        width:100%;
+        max-height:calc(100dvh - 34px);
+        border-radius:22px 22px 0 0;
+    }
+
+    .support-banner{
+        height:150px;
+    }
+
+    .support-body{
+        padding:20px 18px;
+    }
+
+    .support-fab{
+        right:18px;
+        bottom:18px;
+        width:50px;
+        height:50px;
+    }
+
+    /* ===== AUTH MODAL ===== */
+
+    .modal-header-banner{
+        height:150px;
+    }
+
+    .modal-body-content{
+        padding:26px 20px;
+    }
+
 }
 
 /* =========================
     SMALL PHONES
 ========================= */
-@media (max-width: 480px) { }
+@media (max-width: 480px){
+
+    .hero-title{
+        font-size:38px;
+    }
+
+    .artist-card{
+        flex:0 0 160px;
+        width:160px;
+        height:255px;
+    }
+
+    .artist-name{
+        font-size:2rem;
+    }
+
+    #cardWaveCanvas{
+        height:340px;
+    }
+
+}
