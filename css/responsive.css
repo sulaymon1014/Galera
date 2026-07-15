@@ -252,7 +252,8 @@
     }
 
     section h2{
-        font-size:18px;
+        font-size:15px;
+        margin-bottom:12px;
     }
 
     /* ===== FEATURED ===== */
@@ -555,6 +556,10 @@
 
     .hero-title{
         font-size:38px;
+    }
+
+    section h2{
+        font-size:14px;
     }
 
     #cardWaveCanvas{
