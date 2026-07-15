@@ -1144,7 +1144,9 @@ nav a:hover::after{
 
     transition:
         transform .25s ease,
-        box-shadow .25s ease;
+        box-shadow .25s ease,
+        opacity .25s ease,
+        visibility .25s ease;
 
     z-index:9998;
 }
@@ -1542,9 +1544,11 @@ body.menu-open{
 	overflow:hidden;
 }
 
-/* Keep the support button reachable above the open mobile menu */
-.support-fab.menu-visible{
-	z-index:99991;
+/* Hide the floating support button while the mobile menu is open */
+.support-fab.menu-open{
+	opacity:0;
+	visibility:hidden;
+	pointer-events:none;
 }
 
 /* ======= Footer ======= */
@@ -1864,15 +1868,16 @@ html{
     }
 
     section h2{
-        font-size:26px;
+        font-size:22px;
     }
 
     /* ===== FEATURED ===== */
 
+    /* Shorter than the 16:9 video so the video fills the full width
+       and gets cropped top/bottom (centered), like on desktop */
     #featured{
-        height:auto;
-        aspect-ratio:16/9;
-        min-height:215px;
+        height:45vw;
+        min-height:150px;
         margin:16px 12px;
         padding:18px;
     }
@@ -2069,52 +2074,46 @@ html{
 
     #popular-artists{
         min-height:unset;
-        padding:26px 0 34px;
+        padding:26px 18px 34px;
     }
 
-    #popular-artists h2{
-        padding:0 18px;
-    }
-
-    /* Flat, swipeable card row on phones */
-    .artists-row{
-        justify-content:flex-start;
-        align-items:stretch;
-        gap:12px;
-        padding:12px 18px;
-        perspective:none;
-
-        overflow-x:auto;
-        scroll-snap-type:x mandatory;
-        -webkit-overflow-scrolling:touch;
-        scrollbar-width:none;
-    }
-
-    .artists-row::-webkit-scrollbar{
+    /* Three-card podium fan like desktop; the two outer cards are hidden */
+    .artist-far-left,
+    .artist-far-right{
         display:none;
     }
 
-    .artist-card{
-        flex:0 0 190px;
-        width:190px;
-        height:300px;
-        scroll-snap-align:center;
+    .artists-row{
+        justify-content:center;
+        align-items:flex-end;
+        gap:10px;
+        perspective:700px;
     }
 
-    .artist-far-left,
-    .artist-left,
-    .artist-center,
-    .artist-right,
-    .artist-far-right{
-        transform:none;
+    .artist-card{
+        width:27vw;
+        height:auto;
+        aspect-ratio:23/36;
+    }
+
+    .artist-left{
+        transform:translateY(0) rotateY(24deg);
+    }
+
+    .artist-center{
+        transform:translateY(14px) rotateY(0deg);
+    }
+
+    .artist-right{
+        transform:translateY(0) rotateY(-24deg);
     }
 
     .artist-card:hover{
-        transform:none;
+        transform:translateY(0) rotateY(0deg) scale(1.03);
     }
 
     .artist-name{
-        font-size:2.4rem;
+        font-size:1.6rem;
     }
 
     /* ===== ABOUT ===== */
@@ -2174,16 +2173,6 @@ html{
 
     .hero-title{
         font-size:38px;
-    }
-
-    .artist-card{
-        flex:0 0 160px;
-        width:160px;
-        height:255px;
-    }
-
-    .artist-name{
-        font-size:2rem;
     }
 
     #cardWaveCanvas{

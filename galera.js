@@ -41,6 +41,17 @@ heroVideo.oncanplay = () => {
     heroVideo.play();
 };
 
+/* ===== Pause When Scrolled Out of View ===== */
+new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      heroVideo.play().catch(() => {});
+    } else {
+      heroVideo.pause();
+    }
+  });
+}).observe(heroVideo);
+
 /* ==========================================
   HEADER
 ========================================== */
@@ -90,7 +101,7 @@ function toggleMenu(open) {
   header.classList.toggle("menu-open", open);
   document.body.classList.toggle("menu-open", open);
   if (supportFab) {
-    supportFab.classList.toggle("menu-visible", open);
+    supportFab.classList.toggle("menu-open", open);
   }
 }
 
@@ -150,17 +161,31 @@ buttons.forEach(btn => {
   FEATURED
 ========================================== */
 
-/* ===== Featured Background Video ===== */
+/* ===== Featured Background Video (lazy) =====
+   The video is only downloaded once the section approaches
+   the viewport, and it pauses whenever it scrolls out of view. */
 const featuredVideo = document.querySelector(".featured-video");
-featuredVideo.src = isMobile
+const featuredSrc = isMobile
   ? "Resources/Vids/Nizhan Future Featured Artists BG Mobile.mp4"
   : "Resources/Vids/Nizhan Future Featured Artists BG Desktop.mp4";
-featuredVideo.load();
 
 featuredVideo.oncanplay = () => {
   featuredVideo.playbackRate = 1.1;
-  featuredVideo.play();
 };
+
+new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      if (!featuredVideo.src) {
+        featuredVideo.src = featuredSrc;
+        featuredVideo.load();
+      }
+      featuredVideo.play().catch(() => {});
+    } else {
+      featuredVideo.pause();
+    }
+  });
+}, { rootMargin: "200px" }).observe(featuredVideo);
 
 
 /* ==========================================
@@ -266,6 +291,10 @@ document.querySelectorAll(".artist-card").forEach(card => {
   
   const images = [];
   let imagesLoaded = 0;
+  let imagesRequested = false;
+  let cardsReady = false;
+  let waveVisible = false;
+  let waveRunning = false;
 
   // Math config to closely replicate the flow seen in image_ad9aeb.png
   const wave = {
@@ -289,17 +318,38 @@ document.querySelectorAll(".artist-card").forEach(card => {
   resize();
 
   // Load the gallery before firing up the loop
-  imageURLs.forEach(url => {
-    const img = new Image();
-    img.src = url;
-    img.onload = () => {
-      imagesLoaded++;
-      if (imagesLoaded === imageURLs.length) {
-        initWaveAnimation();
-      }
-    };
-    images.push(img);
-  });
+  function loadImages() {
+    if (imagesRequested) return;
+    imagesRequested = true;
+
+    imageURLs.forEach(url => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => {
+        imagesLoaded++;
+        if (imagesLoaded === imageURLs.length) {
+          initWaveAnimation();
+        }
+      };
+      images.push(img);
+    });
+  }
+
+  // Lazy: download artwork and run the animation only while
+  // the canvas is near the viewport
+  new IntersectionObserver(entries => {
+    waveVisible = entries[0].isIntersecting;
+    if (waveVisible) {
+      loadImages();
+      startWave();
+    }
+  }, { rootMargin: "300px" }).observe(canvas);
+
+  function startWave() {
+    if (!cardsReady || waveRunning) return;
+    waveRunning = true;
+    requestAnimationFrame(animateWave);
+  }
 
   function getWaveY(x) {
     return wave.yOffset + Math.sin(x * wave.frequency) * wave.amplitude + Math.cos(x * 0.0016) * 30;
@@ -326,13 +376,21 @@ document.querySelectorAll(".artist-card").forEach(card => {
       // This spreads them out completely across the screen instantly on first load.
       cards.push({
         x: startingRightEdge - (i * spacing),
-        img: images[i % images.length] 
+        img: images[i % images.length]
       });
     }
-    animateWave();
+    cardsReady = true;
+    startWave();
   }
 
   function animateWave() {
+    // Stop the loop while the canvas is off screen; the
+    // IntersectionObserver restarts it when it comes back
+    if (!waveVisible) {
+      waveRunning = false;
+      return;
+    }
+
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 
     cards.forEach(card => {
