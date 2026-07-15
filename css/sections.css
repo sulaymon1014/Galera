@@ -1,0 +1,446 @@
+/* ==========================================================
+   GALERA — PAGE SECTIONS
+   Hero, Featured Artworks, Popular Artists, About
+========================================================== */
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    isolation:isolate;
+}
+
+/* ==========================================
+   HERO CTA
+========================================== */
+
+.hero-cta{
+    width:100%;
+    max-width:260px;
+
+    height:52px;
+
+    font-size:1rem;
+}
+
+/* ===== Background Video ===== */
+
+.background-video{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    z-index:-2;
+    transition:opacity 1s ease;
+    transform:translateZ(0);
+    backface-visibility:hidden;
+}
+
+/* ====== Dark Overlay ====== */
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.25);
+    z-index:-1;
+    transform:translateZ(0);
+    pointer-events:none;
+}
+
+/* ===== HERO CONTENT ===== */
+
+.hero-content{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    width:80%;
+    max-width:900px;
+}
+
+/* ====== Title =========== */
+
+.hero-title{
+    font-family: "MyFont";
+    font-size: 100px;
+    font-weight: 100;
+    -webkit-text-stroke: 0.5px white;
+    user-select: none;
+}
+
+/* ======= Description =========== */
+
+.hero-content p{
+    font-size:20px;
+    line-height:1.8;
+    color:#e8e8e8;
+    margin-bottom:40px;
+    user-select: none;
+}
+
+/* ======== Buttons ========= */
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+/* Log In */
+
+.login-btn{
+    position:relative;
+    overflow:visible;
+    isolation:isolate;
+    background:#ffffff;
+    border:none;
+    border-radius:10px;
+    height:50px;
+    width:150px;
+    cursor:pointer;
+}
+
+.login-btn .text{
+    position:relative;
+    z-index:2;
+}
+
+.login-btn:active{
+    transform:translateY(-1px);
+}
+
+/* Log In Cursor Hover */
+
+.login-btn .hotspot{
+    position:absolute;
+    inset:-2px;              /* size of the invisible "bigger button" mask */
+    border-radius:inherit;
+    overflow:hidden;           /* clips the round glow into this pill shape */
+    opacity:0;
+    z-index:-1;
+    pointer-events:none;
+    transition:opacity .9s ease;
+}
+
+.login-btn:hover .hotspot{
+    opacity:1;
+}
+
+.login-btn .hotspot::before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:var(--glow-x, 90%);
+    transform:translate(-50%,-50%);
+    width:40px;
+    height:180px;
+    border-radius:50%;         /* the actual light source: perfectly round */
+    background:radial-gradient(
+        circle,
+        #ffffff 90%,
+        rgba(255,157,61,0) 90%
+    );
+    filter:blur(14px);
+}
+
+/* Sign Up */
+
+.signup-btn{
+    position:relative;
+    overflow:hidden;
+    height:50px;
+    width:150px;
+    border:2px solid white;
+    border-radius:10px;
+    background:transparent;
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+}
+
+.signup-btn:active{
+    transform:translateY(-1px);
+}
+
+.signup-btn:hover{
+    transition-delay:.35s; /* let the flare finish sweeping before the fill kicks in */
+}
+
+/*    Sign Up Hover Flare Sweep   */
+
+.signup-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-60%;
+    width:35%;
+    height:100%;
+    background:linear-gradient(
+        295deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,.2) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    pointer-events:none;
+}
+
+.signup-btn:hover::before{
+    left:130%;
+    transition:left .5s ease;
+}
+
+.explore-btn{
+    position:absolute;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    background:none;
+    border:none;
+    color:white;
+    font-size:16px;
+    letter-spacing:.5px;
+    cursor:pointer;
+    padding:6px 0;
+}
+
+.explore-btn::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:0;
+    width:0;
+    height:1px;
+    background:white;
+    transform:translateX(-50%);
+    transition:width .35s ease;
+}
+
+.explore-btn:hover::after{
+    width:100%;
+}
+
+.explore-btn:active{
+    transform:translateX(-50%) scale(1.03);
+}
+
+/* =========================
+   FEATURED ARTWORKS
+========================= */
+
+#featured{
+    position:relative;
+    overflow:hidden;
+    margin:20px 15px;
+    height:50vh;
+    border-radius:20px;
+}
+
+#featured:hover{
+    cursor:pointer;
+}
+
+#featured h2{
+    position:relative;
+    z-index:1;
+    margin:0;
+}
+
+#popular-artists h2,
+#featured h2{
+    text-align:center;
+    left:0;
+    top:0;
+    width:100%;
+}
+
+#featured .featured-video{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:50% 50%;
+    scale:1.01;
+    transform:none;
+    z-index:-2;
+}
+
+/* Shine layer (idle: parked off screen; hover: sweeps across) */
+#featured::after {
+  content: "";
+  position: absolute;
+  top: -50%;   /* shift up */
+  left: -10%;
+  width: 200%; /* extra wide so diagonal covers */
+  height: 200%; /* extra tall */
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0) 45%,
+    rgba(255,255,255,0.3) 48%,
+    rgba(255,255,255,0) 51%
+  );
+
+  /* equilateral triangle mask (single-triangle tile repeated) */
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='26' viewBox='0 0 30 26'><g stroke='white' stroke-width='2' fill='none'><polygon points='15,0 30,26 0,26'/></g></svg>");
+  -webkit-mask-repeat: repeat;
+  -webkit-mask-size: 20px 16px;
+
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='26' viewBox='0 0 30 26'><g stroke='white' stroke-width='2' fill='none'><polygon points='15,0 30,26 0,26'/></g></svg>");
+  mask-repeat: repeat;
+  mask-size: 15px 10px;
+
+  transform: translateX(-100%);
+  animation: none;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(100%); }
+}
+
+#featured:hover::after{
+    animation: shine 2s linear;
+}
+
+/* =========================
+   POPULAR ARTISTS
+========================= */
+
+#popular-artists{
+    min-height: 530px;
+}
+
+.artists-row{
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:18px;
+    perspective:1400px;
+}
+
+/* ========= Artist Cards =========== */
+
+.artist-card{
+    position: relative;
+    width:230px;
+    height:360px;
+    overflow:hidden;
+    border-radius:10px;
+    cursor:pointer;
+    transition:
+        transform 1s ease,
+        filter .45s ease;
+}
+
+.artist-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+/* ======== Card Positions ========== */
+
+.artist-far-left{
+    transform: translateY(0) rotateY(35deg);
+}
+
+.artist-left{
+    transform: translateY(20px) rotateY(27deg);
+}
+
+.artist-center{
+    transform: translateY(40px) rotateY(0deg);
+}
+
+.artist-right{
+    transform: translateY(20px) rotateY(-27deg);
+}
+
+.artist-far-right{
+    transform: translateY(0) rotateY(-35deg);
+}
+
+/* ======= Hover ======= */
+
+.artist-card:hover{
+    transform:
+        translateY(-10px)
+        rotateY(0deg)
+        scale(1.01);
+
+    z-index:10;
+}
+
+.artist-card::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,0) 35%,
+            rgba(0,0,0,.5) 65%,
+            rgba(0,0,0,0.7) 100%
+        );
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.artist-center::after{
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,0) 45%,
+            rgba(0,0,0,.04) 72%,
+            rgba(0,0,0,.12) 100%
+        );
+}
+
+.artist-name{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:10;
+    opacity:0;
+    color:#fff;
+    font-family:"Artist Font", Georgia, serif;
+    font-size:4rem;
+    font-weight:300;
+    letter-spacing:1px;
+    text-align:center;
+    transition:opacity .35s ease;
+    pointer-events:none;
+}
+
+.artist-card:hover .artist-name{
+    opacity:1;
+}
+
+/* ============================
+   ABOUT SECTION
+============================ */
+
+.art-river {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: transparent; /* Seamless blend into your section background */
+}
+
+#cardWaveCanvas {
+  display: block;
+  width: 100%;
+  height: 550px; /* Provides plenty of vertical space for the wave curves */
+  margin: 0 auto;
+}

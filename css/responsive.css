@@ -1,0 +1,564 @@
+/* ==========================================================
+   GALERA — RESPONSIVE
+   Narrow desktop, tablet, mobile (incl. mobile menu),
+   small phones. Loaded last so it overrides the base styles.
+========================================================== */
+
+/* =========================
+   NARROW DESKTOP
+========================= */
+
+/* Shrink artist cards so all five fit without overflow */
+@media (min-width:1025px) and (max-width:1366px){
+
+    .artist-card{
+        width:min(230px, calc(20vw - 30px));
+        height:auto;
+        aspect-ratio:23/36;
+    }
+
+    .artist-name{
+        font-size:3rem;
+    }
+
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (min-width:769px) and (max-width:1024px){
+
+    /* ===== HEADER ===== */
+
+    header{
+        padding:12px 32px;
+    }
+
+    /* ===== HERO ===== */
+
+    .hero-content{
+        width:75%;
+        max-width:760px;
+    }
+
+    .hero-title{
+        font-size:84px;
+    }
+
+    .hero-content p{
+        font-size:18px;
+        margin-bottom:32px;
+    }
+
+    /* ===== POPULAR ARTISTS ===== */
+
+    #popular-artists{
+        min-height:unset;
+        padding:30px 0;
+    }
+
+    #popular-artists h2{
+        padding:0 30px;
+    }
+
+    /* Flat, swipeable card row (the 3D fan needs more width than a tablet has) */
+    .artists-row{
+        justify-content:flex-start;
+        align-items:stretch;
+        gap:16px;
+        padding:16px 30px;
+        perspective:none;
+
+        overflow-x:auto;
+        scroll-snap-type:x proximity;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+    }
+
+    .artists-row::-webkit-scrollbar{
+        display:none;
+    }
+
+    .artist-card{
+        flex:0 0 200px;
+        width:200px;
+        height:315px;
+        scroll-snap-align:center;
+    }
+
+    .artist-far-left,
+    .artist-left,
+    .artist-center,
+    .artist-right,
+    .artist-far-right{
+        transform:none;
+    }
+
+    .artist-card:hover{
+        transform:translateY(-6px);
+    }
+
+    .artist-name{
+        font-size:2.6rem;
+    }
+
+    /* ===== ABOUT ===== */
+
+    #cardWaveCanvas{
+        height:460px;
+    }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-menu{
+    display:none;
+}
+
+@media (max-width:768px){
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+
+    header{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+
+        height:54px;
+        padding:10px 18px;
+
+        flex-direction:row;
+    }
+
+    /* Hamburger */
+
+    .hamburger-btn{
+        display:block;
+
+        width:22px;
+        height:28px;
+
+        margin:0;
+        padding:0;
+    }
+
+    .hamburger-btn span{
+        width:20px;
+        margin:4px auto;
+    }
+
+    /* Brand */
+
+    .header-left{
+        gap:18px;
+        padding-left:0;
+    }
+
+    .brand{
+        gap:6px;
+        user-select:none;
+    }
+
+    .brand img{
+        width:26px;
+        height:26px;
+    }
+
+    .brand span{
+        font-size:22px;
+        font-family:"Cinzel", serif;
+    }
+
+    /* Navigation */
+
+    nav{
+        display:none;
+    }
+
+    /* ==========================================
+       HERO
+    ========================================== */
+
+    /* Hero height is calculated after
+    subtracting the fixed header height */
+
+    .hero{
+        position: relative;
+        height: calc(100vw * 0.5625); /* 16:9 video ratio */
+        width: 100%;
+        overflow: hidden;
+        margin-top: 54px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #000;
+    }
+
+    .background-video{
+        display: block;
+
+        width: 110%;
+        height: auto;
+        margin-left:-5%;
+
+        transform: none;
+    }
+
+    .hero-content{
+        width:90%;
+        max-width:280px;
+        top:50%;
+    }
+
+    .hero-title{
+        font-size:44px;
+        -webkit-text-stroke:.3px white;
+    }
+
+    .hero-content h1{
+        margin-bottom:8px;
+    }
+
+    .hero-content p{
+        font-size:14px;
+        line-height:1.3;
+        margin-bottom:18px;
+    }
+
+    /* Hero Buttons */
+
+    .signup-btn{
+        width:120px;
+        height:38px;
+
+        position:relative;
+        overflow:hidden;
+        border:1px solid white;
+        border-radius:6px;
+        font-size:14px;
+    }
+
+    /* ===== SECTIONS ===== */
+
+    section{
+        padding:22px 18px;
+    }
+
+    section h2{
+        font-size:18px;
+    }
+
+    /* ===== FEATURED ===== */
+
+    /* Same proportions as desktop: 50vh on a 16:9 screen is half of
+       a 16:9 frame, i.e. a 32:9 box. The video fills the full width
+       and gets cropped top/bottom (centered). */
+    #featured{
+        height:auto;
+        aspect-ratio:32/9;
+        min-height:96px;
+        margin:16px 12px;
+        padding:14px 18px;
+    }
+
+    .explore-btn{
+        bottom:10px;
+        font-size:13px;
+    }
+
+    /* ==========================================
+       MOBILE MENU
+    ========================================== */
+
+    .mobile-menu{
+        position:fixed;
+        inset:0;
+
+        display:flex;
+        flex-direction:column;
+
+        width:100%;
+        height:100dvh;
+
+        background:rgba(0,0,0,.72);
+        backdrop-filter:blur(28px);
+        -webkit-backdrop-filter:blur(28px);
+
+        opacity:0;
+        visibility:hidden;
+        pointer-events:none;
+
+        transform:translateY(-16px);
+
+        transition:
+            opacity .35s ease,
+            transform .35s ease,
+            visibility .35s ease;
+
+        z-index:99990;
+    }
+
+    .mobile-menu.active{
+        opacity:1;
+        visibility:visible;
+        pointer-events:auto;
+
+        transform:translateY(0);
+    }
+
+    /* ==========================================
+       MOBILE MENU HEADER
+    ========================================== */
+
+    .mobile-menu-header{
+        display:flex;
+        align-items:center;
+        justify-content:flex-start;
+
+        height:56px;
+        min-height:unset;
+
+        padding:0 22px;
+
+        flex-shrink:0;
+    }
+
+    .mobile-menu-header .header-left{
+        display:flex;
+        align-items:center;
+        gap:18px;
+    }
+
+    .mobile-menu-header .brand{
+        display:flex;
+        align-items:center;
+        gap:10px;
+    }
+
+    .mobile-menu-header .brand img{
+        width:34px;
+        height:34px;
+    }
+
+    .mobile-menu-header .brand span{
+        font-size:18px;
+        font-weight:500;
+    }
+
+    /* ==========================================
+       MOBILE NAVIGATION
+    ========================================== */
+
+    .mobile-menu-nav{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+
+        width:100%;
+
+        margin-top:18px;
+        padding:0 22px;
+    }
+
+    .menu-item{
+        display:flex;
+        align-items:center;
+        justify-content:flex-start;
+
+        width:100%;
+
+        padding:12px 0;
+        gap: 8px;
+
+        color:#fff;
+        text-decoration:none;
+
+        font-size:18px;
+        font-weight:500;
+
+        letter-spacing:.2px;
+    }
+
+    .menu-item:hover{
+        opacity:.75;
+    }
+
+    .menu-item i{
+        font-size:11px;
+        opacity:.8;
+        transition:transform .25s ease;
+    }
+
+    .menu-item:hover i{
+        transform:rotate(180deg);
+    }
+
+    .mobile-menu-fill{
+        flex:1;
+    }
+
+    /* ==========================================
+       MOBILE MENU FOOTER
+    ========================================== */
+
+    .mobile-menu-footer{
+        display:flex;
+        flex-direction:row;
+
+        align-items:center;
+        justify-content:space-between;
+
+        padding:24px;
+    }
+
+    .language-btn{
+        width:auto;
+        height:auto;
+
+        padding:0;
+
+        background:none;
+        border:none;
+
+        font-size:16px;
+        font-weight:500;
+
+        color:#fff;
+    }
+
+    .language-btn:hover{
+        opacity:.75;
+    }
+
+    .language-btn i{
+        font-size:12px;
+        opacity:.8;
+    }
+
+    .mobile-signup{
+        width:160px;
+        height:46px;
+
+        margin:0;
+
+        align-self:flex-end;
+    }
+
+    /* ===== POPULAR ARTISTS ===== */
+
+    #popular-artists{
+        min-height:unset;
+        padding:26px 18px 34px;
+    }
+
+    /* Three-card podium fan like desktop; the two outer cards are hidden */
+    .artist-far-left,
+    .artist-far-right{
+        display:none;
+    }
+
+    .artists-row{
+        justify-content:center;
+        align-items:flex-end;
+        gap:10px;
+        perspective:700px;
+    }
+
+    .artist-card{
+        width:27vw;
+        height:auto;
+        aspect-ratio:23/36;
+    }
+
+    .artist-left{
+        transform:translateY(0) rotateY(24deg);
+    }
+
+    .artist-center{
+        transform:translateY(14px) rotateY(0deg);
+    }
+
+    .artist-right{
+        transform:translateY(0) rotateY(-24deg);
+    }
+
+    .artist-card:hover{
+        transform:translateY(0) rotateY(0deg) scale(1.03);
+    }
+
+    .artist-name{
+        font-size:1.6rem;
+    }
+
+    /* ===== ABOUT ===== */
+
+    #about p{
+        font-size:15px;
+    }
+
+    #cardWaveCanvas{
+        height:400px;
+    }
+
+    /* ===== SUPPORT POPUP (bottom sheet) ===== */
+
+    .support-overlay{
+        padding:0;
+        justify-content:center;
+    }
+
+    .support-popup{
+        width:100%;
+        max-height:calc(100dvh - 34px);
+        border-radius:22px 22px 0 0;
+    }
+
+    .support-banner{
+        height:150px;
+    }
+
+    .support-body{
+        padding:20px 18px;
+    }
+
+    .support-fab{
+        right:18px;
+        bottom:18px;
+        width:50px;
+        height:50px;
+    }
+
+    /* ===== AUTH MODAL ===== */
+
+    .modal-header-banner{
+        height:150px;
+    }
+
+    .modal-body-content{
+        padding:26px 20px;
+    }
+
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 480px){
+
+    .hero-title{
+        font-size:38px;
+    }
+
+    #cardWaveCanvas{
+        height:340px;
+    }
+
+}
