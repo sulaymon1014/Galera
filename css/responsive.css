@@ -226,14 +226,15 @@
         -webkit-text-stroke:.3px white;
     }
 
+    /* Extra breathing room: title sits higher, button lower */
     .hero-content h1{
-        margin-bottom:8px;
+        margin-bottom:14px;
     }
 
     .hero-content p{
         font-size:14px;
         line-height:1.3;
-        margin-bottom:18px;
+        margin-bottom:26px;
     }
 
     /* Second sentence is too much copy for the small hero */
@@ -244,14 +245,14 @@
     /* Hero Buttons */
 
     .signup-btn{
-        width:120px;
-        height:38px;
+        width:106px;
+        height:34px;
 
         position:relative;
         overflow:hidden;
         border:1px solid white;
-        border-radius:6px;
-        font-size:14px;
+        border-radius:5px; /* scaled down with the button */
+        font-size:13px;
     }
 
     /* ===== SECTIONS ===== */
@@ -287,7 +288,7 @@
     }
 
     .explore-btn{
-        bottom:10px;
+        bottom:5px;
         font-size:13px;
     }
 
@@ -356,20 +357,11 @@
         gap:18px;
     }
 
+    /* The fixed page header (kept visible above the open menu) already
+       shows the brand — the menu's own copy peeked out misaligned
+       behind it, so hide it. The header strip keeps its height. */
     .mobile-menu-header .brand{
-        display:flex;
-        align-items:center;
-        gap:10px;
-    }
-
-    .mobile-menu-header .brand img{
-        width:34px;
-        height:34px;
-    }
-
-    .mobile-menu-header .brand span{
-        font-size:18px;
-        font-weight:500;
+        display:none;
     }
 
     /* ==========================================
