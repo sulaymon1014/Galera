@@ -240,6 +240,9 @@
     margin:20px 15px;
     height:50vh;
     border-radius:20px;
+    /* Keep the negative z-index video/overlay INSIDE this section's
+       stacking context, above its background (same trick as .hero) */
+    isolation:isolate;
 }
 
 #featured:hover{
