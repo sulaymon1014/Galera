@@ -103,12 +103,6 @@
         font-size:2.6rem;
     }
 
-    /* ===== ABOUT ===== */
-
-    #cardWaveCanvas{
-        height:460px;
-    }
-
 }
 
 /* =========================
@@ -525,17 +519,8 @@
 
     /* ===== ABOUT ===== */
 
-    #about{
-        content-visibility:auto;
-        contain-intrinsic-size:auto 520px;
-    }
-
     #about p{
         font-size:15px;
-    }
-
-    #cardWaveCanvas{
-        height:400px;
     }
 
     /* ===== SUPPORT POPUP (bottom sheet) ===== */
@@ -602,10 +587,6 @@
 
     section h2{
         font-size:14px;
-    }
-
-    #cardWaveCanvas{
-        height:340px;
     }
 
 }

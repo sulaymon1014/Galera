@@ -430,20 +430,3 @@
     opacity:1;
 }
 
-/* ============================
-   ABOUT SECTION
-============================ */
-
-.art-river {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  background: transparent; /* Seamless blend into your section background */
-}
-
-#cardWaveCanvas {
-  display: block;
-  width: 100%;
-  height: 550px; /* Provides plenty of vertical space for the wave curves */
-  margin: 0 auto;
-}
