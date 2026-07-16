@@ -236,6 +236,11 @@
         margin-bottom:18px;
     }
 
+    /* Second sentence is too much copy for the small hero */
+    .hero-desc-extra{
+        display:none;
+    }
+
     /* Hero Buttons */
 
     .signup-btn{
