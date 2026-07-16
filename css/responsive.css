@@ -135,9 +135,15 @@
 
         flex-direction:row;
 
-        /* Cheaper blur for mobile GPUs */
-        backdrop-filter:blur(14px);
-        -webkit-backdrop-filter:blur(14px);
+        /* No backdrop-filter on mobile: a fixed blurred header forces the
+           GPU to re-blur the page on every scrolled frame — the single
+           biggest scroll-jank source. A near-opaque tint + hairline reads
+           just as premium and costs one cheap composited quad. */
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+        background:rgba(8,8,8,.9);
+        border-bottom:1px solid rgba(255,255,255,.07);
+        will-change:auto;
     }
 
     /* Hamburger */
@@ -189,51 +195,95 @@
        HERO
     ========================================== */
 
-    /* Hero height is calculated after
-    subtracting the fixed header height */
+    /* Full-height hero: uncropped 16:9 video on top, content below it
+       on black. Filling the first viewport with the hero keeps the
+       featured video, artist cards and canvas below the fold, so the
+       initial screen composites exactly one video and some text. */
 
     .hero{
         position: relative;
-        height: calc(100vw * 0.5625); /* 16:9 video ratio */
+        height: auto;
+        min-height: calc(100vh - 54px);
+        min-height: calc(100svh - 54px);
         width: 100%;
         overflow: hidden;
         margin-top: 54px;
+        padding: 0; /* the video runs edge-to-edge; .hero-content pads itself */
 
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
         background-color: #000;
     }
 
     .background-video{
-        display: block;
+        position: relative;
+        inset: auto;
+        z-index: 0;
 
-        width: 110%;
+        display: block;
+        width: 100%;
         height: auto;
-        margin-left:-5%;
+        aspect-ratio: 16/9;
+        margin: 0;
+        object-fit: cover;
 
         transform: none;
     }
 
+    /* Repurposed: instead of dimming the whole hero, the overlay now
+       just fades the bottom of the video into the black canvas below */
+    .hero .overlay{
+        inset: auto 0;
+        top: 0;
+        height: calc(100vw * 0.5625);
+        background: linear-gradient(
+            to bottom,
+            rgba(0,0,0,.22),
+            rgba(0,0,0,0) 30%,
+            rgba(0,0,0,0) 62%,
+            #000 100%
+        );
+        transform: none;
+    }
+
     .hero-content{
-        width:90%;
-        max-width:280px;
-        top:50%;
+        position: static;
+        transform: none;
+
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        max-width: none;
+        padding: 26px 28px 44px;
+
+        /* Faint warm brand glow behind the type */
+        background: radial-gradient(
+            130% 90% at 50% 8%,
+            rgba(255,102,0,.07),
+            rgba(0,0,0,0) 62%
+        );
     }
 
     .hero-title{
-        font-size:44px;
+        font-size:56px;
         -webkit-text-stroke:.3px white;
     }
 
     .hero-content h1{
-        margin-bottom:8px;
+        margin-bottom:12px;
     }
 
     .hero-content p{
-        font-size:14px;
-        line-height:1.3;
-        margin-bottom:18px;
+        max-width:300px;
+        font-size:15px;
+        line-height:1.55;
+        margin-bottom:26px;
     }
 
     /* Hero Buttons */
@@ -249,6 +299,17 @@
         font-size:14px;
     }
 
+    /* Primary action in the taller hero gets real presence
+       (must stay after .signup-btn so it wins the cascade) */
+    .hero-cta{
+        width:180px;
+        max-width:180px;
+        height:48px;
+        font-size:15px;
+        letter-spacing:.3px;
+        border-radius:9px;
+    }
+
     /* ===== SECTIONS ===== */
 
     section{
@@ -262,19 +323,27 @@
 
     /* ===== FEATURED ===== */
 
-    /* Same proportions as desktop: 50vh on a 16:9 screen is half of
-       a 16:9 frame, i.e. a 32:9 box. The video fills the full width
-       and gets cropped top/bottom (centered). */
+    /* Taller card than before (24:9 vs 32:9): now that the hero owns the
+       first viewport, featured can breathe as a proper showcase card.
+       Gradient background stands in until the lazy video arrives. */
     #featured{
         height:auto;
-        aspect-ratio:32/9;
-        min-height:96px;
-        margin:16px 12px;
-        padding:14px 18px;
+        aspect-ratio:24/9;
+        min-height:120px;
+        margin:20px 14px;
+        padding:16px 18px;
+        border-radius:16px;
+        background:linear-gradient(140deg, #17110c, #0b0b0e 55%, #101018);
+    }
+
+    /* The hover shine is a 200% x 200% SVG-masked layer; phones have no
+       hover, so it is pure GPU-memory waste there */
+    #featured::after{
+        content:none;
     }
 
     .explore-btn{
-        bottom:10px;
+        bottom:12px;
         font-size:13px;
     }
 
@@ -292,11 +361,11 @@
         width:100%;
         height:100dvh;
 
-        background:rgba(0,0,0,.82);
-
-        /* Cheaper blur for mobile GPUs (darker bg compensates) */
-        backdrop-filter:blur(14px);
-        -webkit-backdrop-filter:blur(14px);
+        /* Near-opaque instead of blur: the menu covers the full screen,
+           so blurring the page behind it is invisible work */
+        background:rgba(5,5,5,.96);
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
 
         opacity:0;
         visibility:hidden;
@@ -463,6 +532,11 @@
     #popular-artists{
         min-height:unset;
         padding:26px 18px 34px;
+
+        /* Skip layout/paint entirely while off screen; the fixed
+           intrinsic size keeps the scrollbar stable */
+        content-visibility:auto;
+        contain-intrinsic-size:auto 340px;
     }
 
     /* Three-card podium fan like desktop; the two outer cards are hidden */
@@ -506,6 +580,11 @@
 
     /* ===== ABOUT ===== */
 
+    #about{
+        content-visibility:auto;
+        contain-intrinsic-size:auto 520px;
+    }
+
     #about p{
         font-size:15px;
     }
@@ -519,6 +598,18 @@
     .support-overlay{
         padding:0;
         justify-content:center;
+
+        /* Blurring the whole page during the open transition drops
+           frames on mobile; a darker veil covers it instead */
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+        background:rgba(0,0,0,.6);
+    }
+
+    .modal-overlay{
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+        background:rgba(0,0,0,.72);
     }
 
     .support-popup{
@@ -561,7 +652,7 @@
 @media (max-width: 480px){
 
     .hero-title{
-        font-size:38px;
+        font-size:48px;
     }
 
     section h2{

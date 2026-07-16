@@ -6,6 +6,11 @@
 
 const isMobile = window.innerWidth <= 768;
 
+/* Respect the OS "reduce motion" setting: load the first frame
+   as a still instead of playing */
+const prefersStill =
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 /* ==========================================
   HERO BACKGROUND VIDEO
 ========================================== */
@@ -20,6 +25,7 @@ heroVideo.load();
 
 /* ===== Play When Ready ===== */
 heroVideo.oncanplay = () => {
+    if (prefersStill) return;
     heroVideo.playbackRate = 1;
     heroVideo.play();
 };
@@ -27,6 +33,7 @@ heroVideo.oncanplay = () => {
 /* ===== Pause When Scrolled Out of View ===== */
 new IntersectionObserver(entries => {
   entries.forEach(entry => {
+    if (prefersStill) return;
     if (entry.isIntersecting) {
       heroVideo.play().catch(() => {});
     } else {
@@ -39,27 +46,51 @@ new IntersectionObserver(entries => {
   FEATURED BACKGROUND VIDEO (lazy)
 ========================================== */
 
-/* The video is only downloaded once the section approaches
-   the viewport, and it pauses whenever it scrolls out of view. */
+/* Two observers on purpose:
+   - a wide one (200px margin) starts the download early so the video
+     is ready before the user reaches it;
+   - a tight one (0px) gates play/pause, so the featured video never
+     DECODES while the hero still owns the screen. Decoding two videos
+     at once is what melts mid-range phones. */
 const featuredVideo = document.querySelector(".featured-video");
 const featuredSrc = isMobile
   ? "Resources/Vids/Nizhan Future Featured Artists BG Mobile.mp4"
   : "Resources/Vids/Nizhan Future Featured Artists BG Desktop.mp4";
 
+featuredVideo.preload = "none";
+
+let featuredVisible = false;
+
 featuredVideo.oncanplay = () => {
   featuredVideo.playbackRate = 1.1;
+  // Covers the race where the section became visible before the
+  // download finished
+  if (featuredVisible && !prefersStill) {
+    featuredVideo.play().catch(() => {});
+  }
 };
 
+/* Download ahead of arrival */
+const featuredLoader = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !featuredVideo.src) {
+      featuredVideo.src = featuredSrc;
+      featuredVideo.load();
+      featuredLoader.disconnect();
+    }
+  });
+}, { rootMargin: "200px" });
+featuredLoader.observe(featuredVideo);
+
+/* Play only while actually on screen */
 new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      if (!featuredVideo.src) {
-        featuredVideo.src = featuredSrc;
-        featuredVideo.load();
-      }
+    featuredVisible = entry.isIntersecting;
+    if (prefersStill) return;
+    if (featuredVisible && featuredVideo.src) {
       featuredVideo.play().catch(() => {});
     } else {
       featuredVideo.pause();
     }
   });
-}, { rootMargin: "200px" }).observe(featuredVideo);
+}).observe(featuredVideo);

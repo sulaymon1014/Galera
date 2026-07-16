@@ -11,6 +11,10 @@
 
   const ctx = canvas.getContext('2d');
 
+  // Reduced motion: render the ribbon once as a still image
+  const prefersStill =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const imageURLs = [
     'Resources/Popular Artists Small/WLOP/5.jpg',
     'Resources/Popular Artists Small/Penguln322/3.jpg',
@@ -42,17 +46,27 @@
   let cards = [];
   const cardWidth = 110;   // Scaling width matching portrait card layouts
   const cardHeight = 165;  // Aspect ratio scale
-  const totalCards = 55;   // Enough cards to stretch past the screen boundaries
   const spacing = 50;      // Tight compression value to force heavy layering
   const speed = 1.3;       // Right-to-left animation drift speed
+
+  // Only as many cards as the ribbon actually needs to span this canvas
+  // (plus wrap-around slack). The old fixed 55 was sized for wide desktops
+  // and made phones draw 3x more cards than their screen could show.
+  function cardCountFor(width) {
+    return Math.ceil((width + cardWidth * 4) / spacing);
+  }
 
   // Handles sharp rendering on high-res / mobile retina displays.
   // Reads the CSS height so the wave stays centered when the canvas
   // shrinks on mobile/tablet.
   function resize() {
-    // Cap at 2x: 3x phone panels quadruple the pixel work for
-    // no visible gain on a moving canvas
-    const dpr = Math.min(window.devicePixelRatio, 2);
+    // clientWidth can be 0 while the section is skipped by
+    // content-visibility; initWaveAnimation re-measures before starting
+    if (!canvas.clientWidth) return;
+
+    // Cap pixel density: extra device pixels quadruple the fill work
+    // for no visible gain on a constantly moving canvas
+    const dpr = Math.min(window.devicePixelRatio, window.innerWidth <= 768 ? 1.5 : 2);
     canvas.width = canvas.clientWidth * dpr;
     canvas.height = canvas.clientHeight * dpr;
     ctx.scale(dpr, dpr);
@@ -88,14 +102,15 @@
   }
 
   // Lazy: download artwork and run the animation only while
-  // the canvas is near the viewport
+  // the canvas is near the viewport. Margin kept tight so the loop
+  // doesn't burn CPU while the user is still a whole section above.
   new IntersectionObserver(entries => {
     waveVisible = entries[0].isIntersecting;
     if (waveVisible) {
       loadImages();
       startWave();
     }
-  }, { rootMargin: "300px" }).observe(canvas);
+  }, { rootMargin: "120px" }).observe(canvas);
 
   function startWave() {
     if (!cardsReady || waveRunning) return;
@@ -108,10 +123,16 @@
   }
 
   function initWaveAnimation() {
+    // The section may have been display-skipped (content-visibility)
+    // when resize() first ran; by now it is near the viewport, so
+    // re-measure before building the ribbon
+    resize();
+
     // Position the first card just past the right edge of the screen,
     // then stack the rest backwards (i * spacing) so the ribbon spans
     // the whole canvas instantly on first load.
     const startingRightEdge = canvas.clientWidth + cardWidth;
+    const totalCards = cardCountFor(canvas.clientWidth);
 
     for (let i = 0; i < totalCards; i++) {
       cards.push({
@@ -165,6 +186,11 @@
 
       ctx.restore();
     });
+
+    if (prefersStill) {
+      waveRunning = false;
+      return;
+    }
 
     requestAnimationFrame(animateWave);
   }

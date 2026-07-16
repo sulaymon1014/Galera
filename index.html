@@ -11,8 +11,10 @@
 		<link rel="stylesheet" href="css/responsive.css">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cinzel:wght@400..700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+		<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&display=swap" rel="stylesheet">
+		<!-- Icons load without blocking first paint; only 7 icons use this sheet -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" media="print" onload="this.media='all'">
+		<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"></noscript>
 
 	</head>
 
@@ -35,7 +37,7 @@
 				</button>
 
 				<div class="brand">
-					<img src="Resources/Imgs/Galera Logo3.png" alt="Galera logo">
+					<img src="Resources/Imgs/galera-logo-96.png" alt="Galera logo">
 					<span>Galera</span>
 				</div>
 
@@ -60,7 +62,7 @@
 
 					<div class="brand">
 
-						<img src="Resources/Imgs/Galera Logo3.png" alt="Galera logo">
+						<img src="Resources/Imgs/galera-logo-96.png" alt="Galera logo">
 
 						<span>Galera</span>
 
@@ -247,11 +249,12 @@
 		<div class="modal-overlay" id="authModalOverlay">
 			<div class="modal-box">
 				<div class="modal-header-banner">
+					<!-- data-src: fixed-position overlay defeats loading="lazy";
+						 overlays.js sets src on first open -->
 					<img
-						src="Resources/Popular Artists Small/Ghost Blade/6.jpg"
+						data-src="Resources/Popular Artists Small/Ghost Blade/6.jpg"
 						class="banner-display-image"
 						alt=""
-						loading="lazy"
 						decoding="async"
 					>
 
@@ -263,7 +266,7 @@
 				<div class="modal-body-content">
 
 					<div class="brand-logo-container">
-						<img src="Resources/Imgs/Galera Logo3.png" class="brand-logo-image" alt="Galera logo">
+						<img src="Resources/Imgs/galera-logo-96.png" class="brand-logo-image" alt="Galera logo">
 						<span class="brand-name-text">GALERA</span>
 					</div>
 
@@ -308,11 +311,12 @@
 
 				<!-- Banner -->
 				<div class="support-banner">
+					<!-- data-src: the overlay is position:fixed at inset:0, so loading="lazy"
+						 would still fetch immediately; overlays.js sets src on first open -->
 					<img
-						src="Resources/Imgs/Moto Girl Support Window.jpg"
+						data-src="Resources/Imgs/moto-girl-support-860.jpg"
 						alt="Support Banner"
 						class="support-banner-image"
-						loading="lazy"
 						decoding="async"
 					>
 

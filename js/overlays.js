@@ -4,6 +4,18 @@
    support popup window and its tabs
 ========================================== */
 
+/* ===== Deferred overlay banners =====
+   The overlay containers sit fixed at inset:0, so loading="lazy"
+   would fetch their banner images on page load anyway. Instead the
+   images carry data-src and hydrate the first time their overlay
+   opens. */
+function hydrateBanners(overlayEl) {
+  overlayEl.querySelectorAll("img[data-src]").forEach(img => {
+    img.src = img.dataset.src;
+    img.removeAttribute("data-src");
+  });
+}
+
 /* ======= AUTHENTICATION MODAL ENGINE ====== */
 
 (function() {
@@ -15,6 +27,7 @@
 
   function openModal(e){
       if(e) e.preventDefault();
+      hydrateBanners(overlay);
       overlay.classList.add("active");
       document.body.style.overflow = "hidden";
 
@@ -73,6 +86,7 @@ const pages = document.querySelectorAll(".support-page");
 const indicator = document.querySelector(".tab-indicator");
 
 function openSupport(){
+  hydrateBanners(supportOverlay);
   supportOverlay.classList.add("active");
   document.body.classList.add("support-open");
 }

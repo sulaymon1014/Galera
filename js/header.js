@@ -53,7 +53,7 @@ function updateHeader(){
 }
 
 updateHeader();
-window.addEventListener("scroll", updateHeader);
+window.addEventListener("scroll", updateHeader, { passive: true });
 
 /* ===== Hamburger Menu ===== */
 
