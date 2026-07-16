@@ -386,13 +386,13 @@
 
         width:100%;
 
-        padding:12px 0;
-        gap: 8px;
+        padding:9px 0;
+        gap: 7px;
 
         color:#fff;
         text-decoration:none;
 
-        font-size:18px;
+        font-size:15px;
         font-weight:500;
 
         letter-spacing:.2px;
@@ -403,7 +403,7 @@
     }
 
     .menu-item i{
-        font-size:11px;
+        font-size:10px;
         opacity:.8;
         transition:transform .25s ease;
     }
@@ -439,7 +439,7 @@
         background:none;
         border:none;
 
-        font-size:16px;
+        font-size:14px;
         font-weight:500;
 
         color:#fff;
@@ -539,18 +539,141 @@
         background:rgba(0,0,0,.72);
     }
 
+    /* Scaled down ~25% across the board — elements and their gaps
+       shrink together so nothing floats in extra whitespace */
+
     .support-popup{
         width:100%;
+        height:auto; /* hug the smaller content; no dead space at the bottom */
         max-height:calc(100dvh - 34px);
-        border-radius:22px 22px 0 0;
+        border-radius:20px 20px 0 0;
     }
 
     .support-banner{
-        height:150px;
+        height:110px;
+    }
+
+    .support-close-btn{
+        top:12px;
+        right:12px;
+        width:32px;
+        height:32px;
+        font-size:19px;
     }
 
     .support-body{
-        padding:20px 18px;
+        padding:14px 16px 18px;
+    }
+
+    .support-title{
+        margin-bottom:12px;
+    }
+
+    .support-title h2{
+        font-size:19px;
+        margin-bottom:4px;
+    }
+
+    .support-title p{
+        font-size:12.5px;
+        line-height:1.45;
+    }
+
+    .support-tabs{
+        padding:5px;
+        margin-bottom:14px;
+        border-radius:12px;
+    }
+
+    .tab-indicator{
+        top:5px;
+        border-radius:8px;
+    }
+
+    .tab-btn{
+        padding:9px 0;
+        border-radius:8px;
+        font-size:13px;
+    }
+
+    /* height:auto on the popup collapses flex:1, so the absolutely
+       positioned pages need a real height to fill */
+    .support-pages{
+        min-height:312px;
+    }
+
+    .issue-card{
+        gap:12px;
+        padding:12px 14px;
+        border-radius:14px;
+    }
+
+    .issue-card:not(:last-child){
+        margin-bottom:8px;
+    }
+
+    .issue-icon{
+        width:40px;
+        height:40px;
+        border-radius:11px;
+    }
+
+    .issue-icon svg{
+        width:19px;
+        height:19px;
+    }
+
+    .issue-info h4{
+        font-size:14px;
+        margin-bottom:2px;
+    }
+
+    .issue-info p{
+        font-size:11.5px;
+    }
+
+    .issue-arrow{
+        font-size:16px;
+    }
+
+    #contact textarea{
+        height:112px;
+        padding:12px;
+        font-size:13px;
+        border-radius:13px;
+    }
+
+    .upload-box{
+        gap:12px;
+        margin-top:12px;
+        padding:12px 14px;
+        border-radius:14px;
+    }
+
+    .upload-icon{
+        width:40px;
+        height:40px;
+        border-radius:11px;
+    }
+
+    .upload-icon svg{
+        width:19px;
+        height:19px;
+    }
+
+    .upload-info h4{
+        font-size:13.5px;
+        margin-bottom:3px;
+    }
+
+    .upload-info p{
+        font-size:11.5px;
+    }
+
+    .send-btn{
+        height:44px;
+        border-radius:13px;
+        font-size:14px;
     }
 
     .support-fab{
@@ -560,14 +683,78 @@
         height:50px;
     }
 
-    /* ===== AUTH MODAL ===== */
+    /* ===== AUTH MODAL =====
+       Everything scales down ~20% together (elements AND gaps)
+       so the compact version keeps the same visual rhythm */
+
+    .modal-box{
+        max-width:360px;
+        border-radius:20px;
+    }
 
     .modal-header-banner{
-        height:150px;
+        height:118px;
+    }
+
+    .modal-close-btn{
+        top:12px;
+        right:12px;
+        width:26px;
+        height:26px;
+        font-size:15px;
     }
 
     .modal-body-content{
-        padding:26px 20px;
+        padding:18px 18px 20px;
+    }
+
+    .brand-logo-container{
+        gap:6px;
+        margin-bottom:14px;
+    }
+
+    .brand-logo-image{
+        width:22px;
+        height:22px;
+    }
+
+    .brand-name-text{
+        font-size:18px;
+    }
+
+    .auth-action-btn{
+        padding:10px 14px;
+        border-radius:10px;
+        font-size:13px;
+        gap:9px;
+        margin-bottom:9px;
+    }
+
+    .auth-action-btn i{
+        font-size:15px;
+    }
+
+    .auth-icon{
+        width:16px;
+        height:16px;
+    }
+
+    .modal-auth-divider{
+        margin:13px 0;
+    }
+
+    .divider-text{
+        font-size:12px;
+    }
+
+    .btn-email{
+        padding:10px 16px;
+    }
+
+    .legal-agreement-text{
+        margin-top:14px;
+        font-size:10.5px;
+        line-height:1.5;
     }
 
 }
