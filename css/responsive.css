@@ -271,7 +271,7 @@
         aspect-ratio:32/9;
         min-height:96px;
         margin:16px 12px;
-        padding:14px 18px;
+        padding:8px 18px 14px; /* tighter top so the heading sits higher */
         background:linear-gradient(140deg, #17110c, #0b0b0e 55%, #101018);
     }
 

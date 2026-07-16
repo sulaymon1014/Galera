@@ -673,10 +673,17 @@
 	scrollbar-width:none;
 }
 
+/* visibility/pointer-events must be scoped to an OPEN overlay: a child
+   with visibility:visible + pointer-events:auto overrides its hidden
+   ancestor, which made the closed popup's FAQ buttons invisibly swallow
+   taps meant for the support fab and artist cards */
 .support-page.active{
 	opacity:1;
-	visibility:visible;
 	transform:translateX(0);
+}
+
+.support-overlay.active .support-page.active{
+	visibility:visible;
 	pointer-events:auto;
 }
 
